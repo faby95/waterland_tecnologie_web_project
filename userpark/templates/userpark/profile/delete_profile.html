@@ -1,0 +1,16 @@
+{% extends 'navbase.html' %}
+
+{% block title %}Profile: {{ user.username }} delete?{% endblock %}
+
+{% block bodybase %}
+
+    <div class="container p-3 my-3 border">
+        <form method="post">{% csrf_token %}
+            <p class="font-weight-bold">Are you sure you want to delete your profile "{{ object.username }}"?</p>
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-danger">Yes, delete my profile</button>
+        <a href="{% url 'userpark:user-profile' %}"> <button type="button" class="btn btn-dark">Back</button> </a>
+        </form>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block head %}
+
+    <nav class="navbar navbar-expand-lg navbar navbar-dark bg-primary">
+      <a class="navbar-brand" href="{% url 'home' %}">WATERLAND HOMEPAGE</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'waterland-park-info-showcase' %}">Waterland Park <span class="sr-only">(current)</span></a>
+          </li>
+          {% if user.is_authenticated %}
+              {% if user.is_staff_member %}
+                <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-expanded="false">
+                Staff {{ user.username }}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="{% url 'userpark:user-profile' %}">Profile</a>
+                <a class="dropdown-item" href="{% url 'waterpark:staff-manage-tiket-main' %}">History management Tiket</a>
+                <a class="dropdown-item" href="{% url 'waterpark:staff-search-tiket-for-user' %}">Detail Tiket</a>
+                <a class="dropdown-item" href="{% url 'waterpark:staff-manage-seasonpass-main' %}">History management SeasonPass</a>
+                <a class="dropdown-item" href="{% url 'waterpark:staff-search-seasonpass-for-user' %}">Detail SeasonPass</a>
+                <a class="dropdown-item" href="{% url 'reviewpark:faq-staff-list' %}">Replay to FAQ</a>
+                <a class="dropdown-item" href="{% url 'userpark:logout' %}">Logout</a>
+                </div>
+                </li>
+            {% else %}
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-expanded="false">
+             Hi {{ user.username }}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="{% url 'userpark:user-profile' %}">Profile</a>
+              <a class="dropdown-item" href="{% url 'waterpark:customerservices' %}">Buy Tikets & SeasonPass</a>
+              <a class="dropdown-item" href="{% url 'waterpark:customer-tiket-list' %}">My Tikets</a>
+              <a class="dropdown-item" href="{% url 'waterpark:customer-seasonpass-list' %}">My Season Pass</a>
+              <a class="dropdown-item" href="{% url 'reviewpark:faq-ask' %}">Ask a FAQ</a>
+              <a class="dropdown-item" href="{% url 'reviewpark:faq-mine' %}">My FAQ</a>
+              <a class="dropdown-item" href="{% url 'userpark:logout' %}">Logout</a>
+            </div>
+          </li>
+          {% endif %}
+          {% else %}
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'userpark:user-create' %}">Sign in</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'userpark:login' %}">Log in</a>
+            </li>
+          {% endif %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-expanded="false">
+              Further link
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="{% url 'reviewpark:feedback-list' %}">Feedback</a>
+              <a class="dropdown-item" href="{% url 'reviewpark:faq' %}">FAQ</a>
+              <a class="dropdown-item" href="{% url 'waterland-about-us' %}">About Us</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    {% block headbase %} {% endblock %}
+
+{% endblock %}
+
+
+{% block body %}
+
+    {% block bodybase %}{% endblock %}
+
+        <footer>
+            <div class="card bg-dark text-white">
+              <img src="{% static 'img/logo.png' %}" class="card-img" alt="footerimg">
+              <div class="card-img-overlay">
+                <h3 class="card-title" style="color:#b8cdda ; ">WATERLAND</h3>
+                  <br>
+                <p class="card-text" style="color:#b8cdda ; ">Further information above navbar "Further link"</p>
+              </div>
+            </div>
+        </footer>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'navbase.html' %}
+{% load static %}
+
+{% block title %}WaterLand, about the acquapark{% endblock %}
+
+{% block bodybase %}
+    <br>
+    <div id="logo" class="text-center">
+        <img src="{% static 'img/favicon.ico' %}" alt="favicon">
+    </div>
+    <br>
+    <div class="container-sm border" style="text-align: justify">
+        <h2><img src="{% static 'img/logo.png' %}" alt="logo"> <small class="text-muted"><u>(History of the acquapark)</u></small></h2>
+        <p class="h4" style="color: darkslategray">{% lorem %}</p>
+    </div>
+    <div id="logo" class="text-center">
+        <img src="{% static 'img/separator.png' %}" alt="separator">
+    </div>
+    <br>
+    <div class="container-sm border" style="text-align: justify">
+        <h2><img src="{% static 'img/logo.png' %}" alt="logo"> <small class="text-muted"><u>(Our swimming pools)</u></small></h2>
+        <p class="h4" style="color: darkslategray">{% lorem %}</p>
+    </div>
+    <div id="logo" class="text-center">
+        <img src="{% static 'img/separator.png' %}" alt="separator">
+    </div>
+    <br>
+    <div class="container-sm border" style="text-align: justify">
+        <h2><img src="{% static 'img/logo.png' %}" alt="logo"> <small class="text-muted"><u>(Daily tikets, SeasonPass and price)</u></small></h2>
+        <p class="h4" style="color: darkslategray">You can buy a daily tiket or enjoy all the year here with us with the season pass, when you buy a season pass it shall be used for all the current year, about daily tiket you need to choose a date. <br>Daily tiket price: $15<br>Season pass price: $125</p>
+    </div>
+    <br>
+    <div id="logo" class="text-center">
+        <img src="{% static 'img/favicon.ico' %}" alt="favicon">
+    </div>
+    <br>
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'navbase.html' %}
+
+{% block title %}STAFF: customer seasonpass search{% endblock %}
+
+{% block bodybase %}
+
+    <div class="container p-3 my-3 bg-dark text-white">
+        <div class="text-center">
+            <h1 class="display-3" style="color:blue;">LIST CUSTOMER SEASONPASS SEARCH</h1>
+        </div>
+
+        <div class="container p-3 my-3 border">
+            <div class="text-center">
+                <h5 style="color: aqua">Searching by username</h5>
+                <form action="{% url 'waterpark:staff-search-seasonpass-for-user-results' %}" method="get">
+                    <label for="nameform">Enter a username:</label>
+                    <input type="text" id="nameform" name="nameform" placeholder="Username here..." required><br><br>
+                    <button type="submit" class="btn btn-info">Search</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

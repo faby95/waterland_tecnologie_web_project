@@ -1,0 +1,21 @@
+{% extends 'navbase.html' %}
+{% load crispy_forms_filters %}
+
+{% block title %}Profile: {{ user.username }}, buy SeasonPass{% endblock %}
+
+{% block bodybase %}
+
+    <div class="container p-3 my-3 bg-dark text-white">
+        <h1 class="display-4">Buy a SeasonPass:</h1>
+        <p>Choose a photo of you, we need it to print your SeasonPass card when you come here</p>
+        <p>-$125 seasonpass price-</p>
+        <p>-Validity for all the purchasing year-</p>
+        <form method="post" enctype="multipart/form-data">{% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-primary">Load photo and buy a SeasonPass</button>
+        <a href="{% url 'waterpark:customerservices' %}"> <button type="button" class="btn btn-primary">Back</button> </a>
+        </form>
+    </div>
+    <br>
+
+{% endblock %}

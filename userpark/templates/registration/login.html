@@ -1,0 +1,17 @@
+{% extends 'navbase.html' %}
+{% load crispy_forms_filters %}
+
+{% block title %}WaterLand Log-In{% endblock %}
+
+{% block bodybase %}
+
+    <div class="container p-3 my-3 bg-dark text-white">
+    <h1 class="display-4">LOG IN:</h1>
+        <form method="post">{% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-primary">Log In</button>
+        </form>
+    </div>
+    <br>
+
+{% endblock %}

@@ -1,0 +1,118 @@
+{% extends 'navbase.html' %}
+{% load static %}
+
+{% block title %}STAFF: {{ user.username }}, manage search Tiket{% endblock %}
+
+{% block bodybase %}
+
+    <div class="container p-3 my-3 bg-dark text-white">
+    <div class="text-center">
+        <h1 class="display-3" style="color:blue;">STAFF TIKETS SEARCH RESULTS</h1><br>
+        <h2><b>* Tikets found: {{ tiket_list.count }}</b></h2>
+        <h2><b>* Unit price: $15</b></h2>
+        <h2 id="price" style="color: greenyellow"><b>* Total gain: $</b></h2>
+        <br><a href="{% url 'waterpark:staff-manage-tiket-main' %}"><button type="button" class="btn btn-info">Back</button></a><br>
+    </div><br>
+
+    <!-- graph  -->
+    <div class="text-center">
+        <canvas id="myChart"></canvas>
+    </div>
+    <!-- graph  -->
+
+    <div class="container p-3 my-3 border">
+        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="text-center">
+                    <h3>TIKETS LIST</h3>
+                    <p>(Flash View)</p>
+                </div>
+            </div>
+              {% for tiket in tiket_list %}
+                  <div class="carousel-item">
+                    <div class="text-center">
+                      {% if tiket.customer.get_username %}
+                        <p><strong style="color: darkorange">Customer (username):</strong>   {{ tiket.customer.get_username }}</p>
+                      {% else %}
+                        <p><strong style="color: darkorange">Customer (username):</strong>   Deleted customer</p>
+                      {% endif %}
+                      <p><strong style="color: darkorange">Purchase date:</strong>     {{ tiket.date_of_purchase }}</p>
+                      <p><strong style="color: darkorange">Validity date:</strong>     {{ tiket.validity_day }}</p>
+                    </div>
+                  </div>
+              {% endfor %}
+          </div>
+          <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+
+        {% if tiket_list.count == 0 %}
+            <div class="text-center">
+                <p>No tikets found</p>
+            </div>
+        {% endif %}
+    </div>
+
+    </div>
+{% endblock %}
+
+{% block javascript %}
+
+    <script>
+        const tiketlen = {{ tiket_list.count }}
+        document.getElementById("price").innerHTML += (tiketlen*15).toString()
+    </script>
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  -->
+    <script src="{% static 'js/chart.js' %}"></script>
+
+    <script>
+    const listlabels = [{% for tiket in tiket_list %}'{{ tiket.validity_day }}',{% endfor %}];
+    const setlabels = new Set(listlabels);
+    let jsonvalue = {};
+    for (const key of setlabels) {
+    jsonvalue[key] = 0;
+    }
+    for (const key of listlabels){
+        jsonvalue[key] += 1;
+    }
+    const listvaluecount = [];
+    for (const key of setlabels){
+        listvaluecount.push(jsonvalue[key]);
+    }
+    // console.log(listvaluecount)
+
+  const labels = Array.from(setlabels);   // x days
+
+  const data = {
+    labels: labels,
+    datasets: [{
+      label: 'Tikets Quantity',
+      backgroundColor: 'rgb(255, 99, 132)',
+      borderColor: 'rgb(255, 99, 132)',
+      data: listvaluecount,                  // y  quantity tikets
+    }]
+  };
+
+  const config = {
+    type: 'line',
+    data: data,
+    options: {}
+  };
+</script>
+
+<script>
+  const myChart = new Chart(
+    document.getElementById('myChart'),
+    config
+  );
+</script>
+
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends 'navbase.html' %}
+
+{% block title %}STAFF: {{ user.username }}, history Tiket{% endblock %}
+
+{% block bodybase %}
+
+    <div class="container p-3 my-3 bg-dark text-white">
+        <div class="text-center">
+            <h1 class="display-3" style="color:blue;">STAFF TIKETS MANAGEMENT</h1>
+        </div>
+
+        <div class="container p-3 my-3 border">
+            <div class="text-center">
+                <h5 style="color: aqua">Searching by day</h5>
+                <form action="{% url 'waterpark:staff-manage-tiket-by-day' %}" method="get">
+                    <label for="dateform">Enter a date:</label>
+                    <input type="date" id="dateform" name="dateform" min="2022-01-01" max="" required><br><br>
+                    <button type="submit" class="btn btn-info">Search</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="container p-3 my-3 border">
+            <div class="text-center">
+                <h5 style="color: aqua">Searching by custom range</h5>
+                <form action="{% url 'waterpark:staff-manage-tiket-by-range' %}" method="get" onsubmit="validation()">
+                    <label for="dateminform">Enter from date:</label>
+                    <input type="date" id="dateminform" name="dateminform" min="2022-01-01" max="" required><br><br>
+                    <label for="datemaxform">Enter to date:</label>
+                    <input type="date" id="datemaxform" name="datemaxform" min="2022-01-01" max="" required><br><br>
+                    <button type="submit" class="btn btn-info">Search</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="container p-3 my-3 border">
+            <div class="text-center">
+                <h5 style="color: aqua">Searching by year</h5>
+                <form action="{% url 'waterpark:staff-manage-tiket-by-year' %}" method="get">
+                    <label for="yearform">Enter a year:</label>
+                    <input type="number" id="yearform" name="yearform" min="2022" max="" placeholder="Year..." required><br><br>
+                    <button type="submit" class="btn btn-info">Search</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+
+    <script>
+        let today = new Date()
+        let dd = today.getDate()
+        let mm = today.getMonth() //January is 0!
+        let yyyy = today.getFullYear()
+        yyyy += 2
+
+        if (dd < 10) {
+           dd = '0' + dd
+        }
+
+        if (mm < 10) {
+           mm = '0' + mm
+        }
+
+        today = yyyy + '-' + mm + '-' + dd
+        let todaymin = yyyy + '-' + mm + '-' + (dd-1)
+
+        document.getElementById("dateform").setAttribute("max", today)
+        document.getElementById("yearform").setAttribute("max", yyyy)
+        document.getElementById("dateminform").setAttribute("max", todaymin)
+        document.getElementById("datemaxform").setAttribute("max", today)
+    </script>
+
+    <script>
+
+            function validation() {
+            let v1 = document.getElementById('dateminform')
+            let v2 = document.getElementById('datemaxform')
+            let d1 = new Date(v1.value)
+            let d2 = new Date(v2.value)
+
+           if (d1 < d2) {
+               return true
+           }else{
+               alert("Date is not in valid range")
+           }
+           }
+
+    </script>
+
+{% endblock %}

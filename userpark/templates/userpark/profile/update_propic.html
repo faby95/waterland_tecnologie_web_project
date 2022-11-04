@@ -1,0 +1,25 @@
+{% extends 'navbase.html' %}
+{% load static %}
+{% load crispy_forms_filters %}
+
+{% block title %}Profile: {{ user.username }}, update propic{% endblock %}
+
+{% block bodybase %}
+
+    <div class="container p-3 my-3 bg-dark text-white">
+        <h1 class="display-4">UPDATE PROFILE PICTURE:</h1>
+        {% if not user.propic %}
+            <img src="{% static 'img/generic_user_profile.png' %}" alt="current_propic" class="img-thumbnail">
+        {% else %}
+            <img src="/media/{{ MEDIA_URL }}{{ user.propic }}" alt="current_propic" class="img-thumbnail">
+        {% endif %}
+        <p>CURRENT PICTURE PROFILE</p>
+        <form method="post" enctype="multipart/form-data">{% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a href="{% url 'userpark:user-profile' %}"> <button type="button" class="btn btn-primary">Back</button> </a>
+        </form>
+    </div>
+    <br>
+
+{% endblock %}

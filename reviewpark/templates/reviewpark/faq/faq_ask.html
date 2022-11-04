@@ -1,0 +1,20 @@
+{% extends 'navbase.html' %}
+{% load static %}
+{% load crispy_forms_filters %}
+
+{% block title %}WaterLand, ask a FAQ{% endblock %}
+
+{% block bodybase %}
+
+    <div class="container p-3 my-3 bg-dark text-white">
+        <h1 class="display-4">ASK A FAQ:</h1>
+        <p>After sent us a FAQ, check on My FAQ above the navbar, we'll answer you as soon as possible</p>
+        <img src="{% static 'img/question.png' %}">
+        <form method="post">{% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-primary">Send your FAQ</button>
+        </form>
+    </div>
+    <br>
+
+{% endblock %}

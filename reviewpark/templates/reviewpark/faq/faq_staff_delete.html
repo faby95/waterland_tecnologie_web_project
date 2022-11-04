@@ -1,0 +1,19 @@
+{% extends 'navbase.html' %}
+
+{% block title %}WaterLand, Staff FAQ delete{% endblock %}
+
+{% block bodybase %}
+
+    <div class="container p-3 my-3 border">
+        <form method="post">{% csrf_token %}
+            <p class="font-weight-bold">Are you sure you want to delete this FAQ written by "{{ object.customer.get_username }}"?</p>
+            <br>
+            <p><strong>QUESTION:</strong></p>
+            <p>{{ object.ask }}</p>
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-danger">Yes, delete this FAQ</button>
+        <a href="{% url 'reviewpark:faq-staff-list' %}"> <button type="button" class="btn btn-dark">Back to FAQ answare zone</button> </a>
+        </form>
+    </div>
+
+{% endblock %}

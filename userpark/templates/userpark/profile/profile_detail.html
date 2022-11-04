@@ -1,0 +1,81 @@
+{% extends 'navbase.html' %}
+{% load static %}
+
+{% block title %}Profile: {{ user.username }}{% endblock %}
+
+{% block bodybase %}
+
+    <div class="container p-3 my-3 border">
+        <h1 class="display-4">PROFILE: {{ user.username }} </h1>
+        <table class="table table-striped">
+        <thead>
+        <tr>
+        <th scope="col">About you</th>
+        <th scope="col">Info</th>
+        <th scope="col">Update</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if not user.is_staff_member %}
+            <tr>
+            <th scope="row">Photo</th>
+                {% if not user.propic %}
+                    <td><img src="{% static 'img/generic_user_profile.png' %}" alt="propic" class="img-thumbnail"></td>
+                {% else %}
+                    <td><img src="/media/{{ MEDIA_URL }}{{ user.propic }}" alt="propic" class="img-thumbnail"></td>
+                {% endif %}
+            <td><a href="{% url 'userpark:user-profile-update-propic' user.slug %}"><button type="button" class="btn btn-info">UPDATE</button></a></td>
+            </tr>
+        {% endif %}
+        <tr>
+        <th scope="row">First Name</th>
+        <td>{{ user.first_name }}</td>
+        <td><a href="{% url 'userpark:user-profile-update-firstname' user.slug %}"><button type="button" class="btn btn-info">UPDATE</button></a></td>
+        </tr>
+        <tr>
+        <th scope="row">Last Name</th>
+        <td>{{ user.last_name }}</td>
+        <td><a href="{% url 'userpark:user-profile-update-lastname' user.slug %}"><button type="button" class="btn btn-info">UPDATE</button></a></td>
+        </tr>
+        <tr>
+        <th scope="row">Gender</th>
+        <td>{{ user.gender }}</td>
+        <td><a href="{% url 'userpark:user-profile-update-gender' user.slug %}"><button type="button" class="btn btn-info">UPDATE</button></a></td>
+        </tr>
+        <tr>
+        <th scope="row">Email</th>
+        <td>{{ user.email }}</td>
+        <td><a href="{% url 'userpark:user-profile-update-email' user.slug %}"><button type="button" class="btn btn-info">UPDATE</button></a></td>
+        </tr>
+        <tr>
+        <th scope="row">Birthday</th>
+        <td>{{ user.birth_date }}</td>
+        <td><a href="{% url 'userpark:user-profile-update-birthdate' user.slug %}"><button type="button" class="btn btn-info">UPDATE</button></a></td>
+        </tr>
+        {% if user.is_staff_member %}
+            <tr>
+            <th scope="row">Staff code</th>
+            <td>{{ user.staff_assigned_code }}</td>
+            <td>-</td>
+            </tr>
+        {% endif %}
+        <tr>
+        <th scope="row">Sing In date</th>
+        <td>{{ user.date_joined }}</td>
+        <td>-</td>
+        </tr>
+        <tr>
+        <th scope="row">Last login</th>
+        <td>{{ user.last_login }}</td>
+        <td>-</td>
+        </tr>
+        </tbody>
+        </table>
+    <br>
+    <a href="{% url 'userpark:user-profile-delete' user.slug %}"> <button type="button" class="btn btn-danger">DELETE MY PROFILE</button> </a>
+    </div>
+    <br>
+
+
+{% endblock %}
+

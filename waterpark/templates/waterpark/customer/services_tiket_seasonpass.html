@@ -1,0 +1,24 @@
+{% extends 'navbase.html' %}
+
+{% block title %}Waterland Tikets & Seasonpass{% endblock %}
+
+{% block bodybase %}
+
+    <div class="container p-3 my-3 bg-dark text-white">
+        <h1 class="display-3" style="color:blue;">JOIN IN WATERLAND ACQUAPARK</h1>
+        <br>
+        <ul>
+        <li>The SeasonPass is valid all the current year when you purchase one</li>
+        <li>Tickets and SeasonPass cannot be refunded</li>
+        <li>You can buy Tikets or SeasonPass just for yourself, they are not transferable</li>
+        </ul>
+        <br>
+        <div class="container p-3 my-3 border">
+            <div class="text-center">
+                <a href="{% url 'waterpark:customer-buy-tiket' %}"><button type="button" class="btn btn-success">BUY DAILY TIKET</button></a>
+                <a href="{% url 'waterpark:customer-buy-seasonpass' %}"><button type="button" class="btn btn-warning">BUY SEASON PASS</button></a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
