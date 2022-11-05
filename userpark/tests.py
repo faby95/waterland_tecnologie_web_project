@@ -102,3 +102,88 @@ class CreateUserTypeTests(TestCase):
         staff = myUser.objects.filter(username='paola98')
         self.assertEqual(request.status_code, 302)  # No follow=True, 302 redirect to home = user has been created
         self.assertEqual(staff.count(), 1)
+
+
+class CreateCustomerMissingFieldsTests(TestCase):
+
+    def test_username_missing(self):
+        request = self.client.post(reverse('userpark:customer-create'), {'username': '', 'gender': 'F',
+                                                                         'email': 'pv@gmail.com',
+                                                                         'birth_date': date.today() - timedelta(
+                                                                             days=(365 * 27)),
+                                                                         'password1': 'Asdfghjkl!!',
+                                                                         'password2': 'Asdfghjkl!!'})
+        usercount = myUser.objects.all()
+        self.assertNotEqual(request.status_code, 302)    # No redirect to home, no user created
+        self.assertEqual(usercount.count(), 0)
+
+    def test_email_missing(self):
+        request = self.client.post(reverse('userpark:customer-create'), {'username': 'paola98', 'gender': 'F',
+                                                                         'email': '',
+                                                                         'birth_date': date.today() - timedelta(
+                                                                             days=(365 * 27)),
+                                                                         'password1': 'Asdfghjkl!!',
+                                                                         'password2': 'Asdfghjkl!!'})
+        usercount = myUser.objects.all()
+        self.assertNotEqual(request.status_code, 302)  # No redirect to home, no user created
+        self.assertEqual(usercount.count(), 0)
+
+    def test_birth_date_missing(self):
+        request = self.client.post(reverse('userpark:customer-create'), {'username': 'paola98', 'gender': 'F',
+                                                                         'email': '',
+                                                                         'birth_date': '',
+                                                                         'password1': 'Asdfghjkl!!',
+                                                                         'password2': 'Asdfghjkl!!'})
+        usercount = myUser.objects.all()
+        self.assertNotEqual(request.status_code, 302)  # No redirect to home, no user created
+        self.assertEqual(usercount.count(), 0)
+
+
+class CreateStaffMissingFieldsTests(TestCase):
+
+    def test_username_missing(self):
+        request = self.client.post(reverse('userpark:staff-create'), {'username': '', 'gender': 'F',
+                                                                      'email': 'pv@gmail.com',
+                                                                      'birth_date': date.today() - timedelta(
+                                                                          days=(365 * 27)),
+                                                                      'password1': 'Asdfghjkl!!',
+                                                                      'password2': 'Asdfghjkl!!',
+                                                                      'staff_assigned_code': '52gf3'})
+        usercount = myUser.objects.all()
+        self.assertNotEqual(request.status_code, 302)  # No redirect to home, no user created
+        self.assertEqual(usercount.count(), 0)
+
+    def test_email_missing(self):
+        request = self.client.post(reverse('userpark:staff-create'), {'username': 'paola98', 'gender': 'F',
+                                                                      'email': '',
+                                                                      'birth_date': date.today() - timedelta(
+                                                                          days=(365 * 27)),
+                                                                      'password1': 'Asdfghjkl!!',
+                                                                      'password2': 'Asdfghjkl!!',
+                                                                      'staff_assigned_code': '52gf3'})
+        usercount = myUser.objects.all()
+        self.assertNotEqual(request.status_code, 302)  # No redirect to home, no user created
+        self.assertEqual(usercount.count(), 0)
+
+    def test_staff_code_missing(self):
+        request = self.client.post(reverse('userpark:staff-create'), {'username': 'paola98', 'gender': 'F',
+                                                                      'email': 'pv@gmail.com',
+                                                                      'birth_date': date.today() - timedelta(
+                                                                          days=(365 * 27)),
+                                                                      'password1': 'Asdfghjkl!!',
+                                                                      'password2': 'Asdfghjkl!!',
+                                                                      'staff_assigned_code': ''})
+        usercount = myUser.objects.all()
+        self.assertNotEqual(request.status_code, 302)  # No redirect to home, no user created
+        self.assertEqual(usercount.count(), 0)
+
+    def test_birth_day_missing(self):
+        request = self.client.post(reverse('userpark:staff-create'), {'username': 'paola98', 'gender': 'F',
+                                                                      'email': 'pv@gmail.com',
+                                                                      'birth_date': '',
+                                                                      'password1': 'Asdfghjkl!!',
+                                                                      'password2': 'Asdfghjkl!!',
+                                                                      'staff_assigned_code': '52gf3'})
+        usercount = myUser.objects.all()
+        self.assertNotEqual(request.status_code, 302)  # No redirect to home, no user created
+        self.assertEqual(usercount.count(), 0)
