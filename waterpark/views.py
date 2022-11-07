@@ -148,6 +148,7 @@ class SearchTiketByRangeListView(LoginRequiredMixin, StaffRequiredMixin, ListVie
             tiket_list = Tiket.objects.filter(validity_day__range=[dateminform, datemaxform]).order_by('validity_day')
         else:
             tiket_list = None
+            messages.warning(self.request, 'Wrong date range detected! no resultus to display')
         return tiket_list
 
 
