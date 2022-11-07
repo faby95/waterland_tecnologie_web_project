@@ -6,7 +6,7 @@
 {% block bodybase %}
 
     <div class="text-center" style="background-color: lightgray">
-        <h1 class="display-1"><strong>FEEDBACK</strong></h1>
+        <h1><strong><u>FEEDBACK</u></strong></h1>
     </div>
 
     <div class="container p-3 my-3 bg-dark text-white">
@@ -49,7 +49,7 @@
             </tr>
             <tr>
             <th scope="row">STARS RATE:</th>
-             <td><img src="{% static 'img/yellow-star-icon.png' %}" alt="starfeedback1">{{ feedback.stars }}/5<img src="{% static 'img/yellow-star-icon.png' %}" alt="starfeedback2"></td>
+             <td><img src="{% static 'img/yellow-star-icon_30.png' %}" alt="starfeedback1">{{ feedback.stars }}/5<img src="{% static 'img/yellow-star-icon_30.png' %}" alt="starfeedback2"></td>
             </tr>
          </tbody>
         </table>
@@ -60,7 +60,7 @@
         <br>
     {% empty %}
         <div class="text-center">
-            <h1 class="display-1"><strong>NO FEEDBACK YET</strong></h1>
+            <h1><strong><u>NO FEEDBACK YET</u></strong></h1>
         </div>
     {% endfor %}
     </div>

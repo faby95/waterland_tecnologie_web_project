@@ -4,8 +4,8 @@
 
 {% block bodybase %}
     <div class="text-center" style="background-color: lightgray">
-        <h1 class="display-1"><strong>MY TIKETS</strong></h1>
-        </div>
+        <h1><strong><u>MY TIKETS</u></strong></h1>
+    </div>
     <div class="container p-3 my-3 bg-dark text-white">
     {% for tiket in tiket_list %}
         <br>
@@ -41,7 +41,7 @@
         <br>
     {% empty %}
         <div class="text-center">
-            <h1 class="display-1"><strong>NO TIKETS YET</strong></h1>
+            <h2><strong><u>NO TIKETS YET</u></strong></h2>
         </div>
     {% endfor %}
     </div>

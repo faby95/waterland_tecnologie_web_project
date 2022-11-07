@@ -5,7 +5,7 @@
 {% block bodybase %}
 
     <div class="text-center" style="background-color: lightgray">
-        <h1 class="display-1"><strong>SEASON PASS RESULTS</strong></h1><br>
+        <h1><strong><u>SEASON PASS RESULTS:</u></strong></h1><br>
         <a href="{% url 'waterpark:staff-search-seasonpass-for-user' %}"><button type="button" class="btn btn-info">Back</button></a>
         </div>
     <div class="container p-3 my-3 bg-dark text-white">
@@ -54,7 +54,7 @@
         <br>
     {% empty %}
         <div class="text-center">
-            <h1 class="display-1"><strong>NO SEASON FOUND</strong></h1>
+            <h1><strong><u>NO SEASON FOUND</u></strong></h1>
         </div>
     {% endfor %}
     </div>

@@ -5,7 +5,7 @@
 {% block bodybase %}
 
     <div class="container p-3 my-3 bg-dark text-white">
-        <h1 class="display-3" style="color:blue;">JOIN IN WATERLAND ACQUAPARK</h1>
+        <h2 style="color:blue;">JOIN IN WATERLAND ACQUAPARK</h2>
         <br>
         <ul>
         <li>The SeasonPass is valid all the current year when you purchase one</li>
@@ -16,6 +16,10 @@
         <div class="container p-3 my-3 border">
             <div class="text-center">
                 <a href="{% url 'waterpark:customer-buy-tiket' %}"><button type="button" class="btn btn-success">BUY DAILY TIKET</button></a>
+            </div>
+        </div>
+        <div class="container p-3 my-3 border">
+            <div class="text-center">
                 <a href="{% url 'waterpark:customer-buy-seasonpass' %}"><button type="button" class="btn btn-warning">BUY SEASON PASS</button></a>
             </div>
         </div>

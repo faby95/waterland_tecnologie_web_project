@@ -4,7 +4,7 @@
 
 {% block bodybase %}
     <div class="text-center" style="background-color: lightgray">
-        <h1 class="display-1"><strong>TIKETS RESULTS:</strong></h1><br>
+        <h1><strong><u>TIKETS RESULTS:</u></strong></h1><br>
         <a href="{% url 'waterpark:staff-search-tiket-for-user' %}"><button type="button" class="btn btn-info">Back</button></a>
         </div>
     <div class="container p-3 my-3 bg-dark text-white">
@@ -45,7 +45,7 @@
         <br>
     {% empty %}
         <div class="text-center">
-            <h1 class="display-1"><strong>NO TIKETS FOUND</strong></h1>
+            <h1><strong><u>NO TIKETS FOUND</u></strong></h1>
         </div>
     {% endfor %}
     </div>
