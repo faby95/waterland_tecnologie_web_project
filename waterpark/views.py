@@ -33,13 +33,16 @@ class CustomerBuyTiketView(LoginRequiredMixin, CustomerRequiredMixin, SuccessMes
         self.object = form.save(commit=False)
         self.object.customer = self.request.user
         if Tiket.objects.filter(customer=self.request.user, validity_day=self.object.validity_day):
+            self.tiket_already_taken()
             return self.form_invalid(form)
         else:
             self.object.save()
             return super().form_valid(form)
 
-    def form_invalid(self, form):
+    def tiket_already_taken(self):
         messages.warning(self.request, 'You already got a tiket for this date!')
+
+    def form_invalid(self, form):
         return super().form_invalid(form)
 
 
