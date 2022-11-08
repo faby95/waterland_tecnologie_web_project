@@ -34,14 +34,23 @@ class CustomerSignUpForm(UserCreationForm):
 
 
 class StaffSignUpForm(UserCreationForm):
+    staff_key = forms.CharField(max_length=20, help_text='Write here the key to create your staff account')
 
     class Meta(UserCreationForm.Meta):
         model = myUser
-        fields = ['username', 'first_name', 'last_name', 'email', 'gender', 'birth_date', 'staff_assigned_code']
-        fields_required = ['username', 'email', 'staff_assigned_code', 'gender', 'birth_date']
+        fields = ['username', 'first_name', 'last_name', 'email', 'gender', 'birth_date', 'staff_assigned_code', 'staff_key']
+        fields_required = ['username', 'email', 'staff_assigned_code', 'gender', 'birth_date', 'staff_key']
         widgets = {
             'birth_date': DateInput(),
         }
+
+    def clean(self):
+        cleaned_data = super(StaffSignUpForm, self).clean()
+        keystaff = cleaned_data.get('staff_key')
+        if keystaff != 'createstaffuser':   # static demo control password, it could be dynamic to change it sometime from a remote system
+            msg = u'Staff key not valid, cannot create the account'
+            self.add_error('staff_key', msg)
+        return cleaned_data
 
     @transaction.atomic
     def save(self):
