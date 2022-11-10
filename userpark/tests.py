@@ -1,6 +1,7 @@
 from django.test import TestCase
 from datetime import date, timedelta
 from .models import User as myUser
+from .models import StaffAuthTable
 from django.urls import reverse
 
 # Create your tests here.
@@ -24,6 +25,7 @@ class CreateUserTypeTests(TestCase):
         self.assertEqual(active_user[0]['is_active'], True)
 
     def test_create_staff_type(self):
+        StaffAuthTable.objects.create(code='52gf3', key='createstaffuser', is_used=False)
         request = self.client.post(reverse('userpark:staff-create'), {'username': 'paola98', 'gender': 'F',
                                                                       'email': 'pv@gmail.com',
                                                                       'birth_date': date.today()-timedelta(days=(365*27)),
@@ -73,6 +75,7 @@ class CreateUserTypeTests(TestCase):
         self.assertEqual(customer.count(), 1)
 
     def test_create_staff_out_of_birthdate_range_in_past(self):
+        StaffAuthTable.objects.create(code='52gf3', key='createstaffuser', is_used=False)
         request = self.client.post(reverse('userpark:staff-create'), {'username': 'paola98', 'gender': 'F',
                                                                       'email': 'pv@gmail.com',
                                                                       'birth_date': date.today()-timedelta(days=(365*105)),
@@ -83,6 +86,7 @@ class CreateUserTypeTests(TestCase):
         self.assertEqual(staff.count(), 0)
 
     def test_create_staff_out_of_birthdate_range_in_future(self):
+        StaffAuthTable.objects.create(code='52gf3', key='createstaffuser', is_used=False)
         request = self.client.post(reverse('userpark:staff-create'), {'username': 'paola98', 'gender': 'F',
                                                                       'email': 'pv@gmail.com',
                                                                       'birth_date': date.today()+timedelta(days=1),
@@ -93,6 +97,7 @@ class CreateUserTypeTests(TestCase):
         self.assertEqual(staff.count(), 0)
 
     def test_create_staff_in_range_of_birthdate(self):
+        StaffAuthTable.objects.create(code='52gf3', key='createstaffuser', is_used=False)
         request = self.client.post(reverse('userpark:staff-create'), {'username': 'paola98', 'gender': 'F',
                                                                       'email': 'pv@gmail.com',
                                                                       'birth_date': date.today() - timedelta(days=(365*27)),
@@ -142,6 +147,7 @@ class CreateCustomerMissingFieldsTests(TestCase):
 class CreateStaffMissingFieldsTests(TestCase):
 
     def test_username_missing(self):
+        StaffAuthTable.objects.create(code='52gf3', key='createstaffuser', is_used=False)
         request = self.client.post(reverse('userpark:staff-create'), {'username': '', 'gender': 'F',
                                                                       'email': 'pv@gmail.com',
                                                                       'birth_date': date.today() - timedelta(
@@ -154,6 +160,7 @@ class CreateStaffMissingFieldsTests(TestCase):
         self.assertEqual(usercount.count(), 0)
 
     def test_email_missing(self):
+        StaffAuthTable.objects.create(code='52gf3', key='createstaffuser', is_used=False)
         request = self.client.post(reverse('userpark:staff-create'), {'username': 'paola98', 'gender': 'F',
                                                                       'email': '',
                                                                       'birth_date': date.today() - timedelta(
@@ -166,6 +173,7 @@ class CreateStaffMissingFieldsTests(TestCase):
         self.assertEqual(usercount.count(), 0)
 
     def test_staff_code_missing(self):
+        StaffAuthTable.objects.create(code='52gf3', key='createstaffuser', is_used=False)
         request = self.client.post(reverse('userpark:staff-create'), {'username': 'paola98', 'gender': 'F',
                                                                       'email': 'pv@gmail.com',
                                                                       'birth_date': date.today() - timedelta(
@@ -178,6 +186,7 @@ class CreateStaffMissingFieldsTests(TestCase):
         self.assertEqual(usercount.count(), 0)
 
     def test_birth_day_missing(self):
+        StaffAuthTable.objects.create(code='52gf3', key='createstaffuser', is_used=False)
         request = self.client.post(reverse('userpark:staff-create'), {'username': 'paola98', 'gender': 'F',
                                                                       'email': 'pv@gmail.com',
                                                                       'birth_date': '',
@@ -189,6 +198,7 @@ class CreateStaffMissingFieldsTests(TestCase):
         self.assertEqual(usercount.count(), 0)
 
     def test_staff_key_missing(self):
+        StaffAuthTable.objects.create(code='52gf3', key='createstaffuser', is_used=False)
         request = self.client.post(reverse('userpark:staff-create'), {'username': 'paola98', 'gender': 'F',
                                                                       'email': 'pv@gmail.com',
                                                                       'birth_date': '',
@@ -200,6 +210,7 @@ class CreateStaffMissingFieldsTests(TestCase):
         self.assertEqual(usercount.count(), 0)
 
     def test_wrong_staff_key(self):
+        StaffAuthTable.objects.create(code='52gf3', key='createstaffuser', is_used=False)
         request = self.client.post(reverse('userpark:staff-create'), {'username': 'paola98', 'gender': 'F',
                                                                       'email': 'pv@gmail.com',
                                                                       'birth_date': '',

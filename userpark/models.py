@@ -50,3 +50,15 @@ class User(AbstractUser):
                 output_size = (200, 200)
                 img.thumbnail(output_size)
                 img.save(self.propic.path)
+
+
+class StaffAuthTable(models.Model):  # External populated table for hired staff
+    code = models.CharField(max_length=5, null=False, blank=False, unique=True)
+    key = models.CharField(max_length=20, null=False, blank=False, default='createstaffuser')
+    is_used = models.BooleanField(blank=False, null=False, default=False)
+
+    class Meta:
+        verbose_name_plural = 'Staff-Auth-Table'
+
+    def __str__(self):
+        return f'{self.code}-{self.key}-{self.is_used}'

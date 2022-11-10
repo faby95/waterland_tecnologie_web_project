@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
 from userpark.models import User as myUser
+from userpark.models import StaffAuthTable
 from datetime import date, timedelta
 
 
@@ -46,10 +47,19 @@ class StaffSignUpForm(UserCreationForm):
 
     def clean(self):
         cleaned_data = super(StaffSignUpForm, self).clean()
-        keystaff = cleaned_data.get('staff_key')
-        if keystaff != 'createstaffuser':   # static demo control password, it could be dynamic to change it sometime from a remote system
-            msg = u'Staff key not valid, cannot create the account'
-            self.add_error('staff_key', msg)
+        code = cleaned_data.get('staff_assigned_code')  # retrive staff assigned code from the form
+        keystaff = cleaned_data.get('staff_key')        # retrive staff key from the form
+        auth = StaffAuthTable.objects.filter(code=code, key=keystaff, is_used=False)  # get instance, must be just one result
+        if auth.count():
+            auth_dict = auth.values('code', 'key')[0]  # get dict of the instance
+            if keystaff == auth_dict['key'] and code == auth_dict['code']:
+                auth.update(is_used=True)
+            else:
+                self.add_error('staff_key', u'Invalid combination!')
+                self.add_error('staff_assigned_code', u'Invalid combination!')
+        else:
+            self.add_error('staff_key', u'Invalid combination!')
+            self.add_error('staff_assigned_code', u'Invalid combination!')
         return cleaned_data
 
     @transaction.atomic
