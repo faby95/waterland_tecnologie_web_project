@@ -10,6 +10,46 @@ logger = getLogger('response_logger')
 # Create your tests here.
 
 
+class TestTiket(TestCase):
+
+    def setUp(self):
+        self.t = Tiket.objects.create(customer=myUser.objects.create(username='paola98', first_name='paola',
+                                                                     last_name='verdi', gender='F',
+                                                                     email='pv@gmail.com', is_staff_member=False,
+                                                                     is_staff=False, is_superuser=False,
+                                                                     birth_date='1998-02-13'),
+                                      validity_day=date.today()+timedelta(days=20))
+
+    def testSetUpCreation(self):
+        self.assertIsNotNone(self.t, 't do not exists')
+
+    # Consistenza architetturale
+    def testTiketObj(self):
+        self.assertTrue(isinstance(self.t, Tiket), 't is not a Tiket')
+
+    def testDefaultAttribute(self):
+        self.assertEqual(self.t.cost, 15, 'Wrong default cost attribute')
+        self.assertIsNotNone(self.t.date_of_purchase, 'This field cannot be null')
+
+    # Coerenza funzionale, metodi che hanno subito un override, metodi utilizzati dal modello
+    def testMethods(self):
+        self.assertTrue(callable(self.t.__str__), 't haven\'t got __str__ method')
+        self.assertTrue(callable(self.t.save), 't haven\'t got save method')
+
+    # Coerenza funzionale: risultati attesi dei metodi
+    def test__str__method(self):
+        self.assertEqual(self.t.__str__(), f'{self.t.customer.get_username()} - Tiket:{self.t.tiket_slug}',
+                         "Wrong self rappresentation")
+
+    def testSaveMethod(self):
+        self.assertIsNotNone(self.t.tiket_slug, "Tiket slug do not created, warning! it cannot be null")
+
+    def tearDown(self):
+        self.t.delete()
+    # validity_date attribute range tested in view, customer use the view to interact with database
+    # view use validation logic before to save in database
+
+
 class CustomerTiketBuyViewTests(TestCase):
 
     def setUp(self):
@@ -25,7 +65,7 @@ class CustomerTiketBuyViewTests(TestCase):
     def test_customer_tiket_buy_access_mixin(self):
         # Test code
         response = self.client.get(reverse('waterpark:customer-buy-tiket'))
-        self.assertEqual(response.status_code, 200)  # 403 FORBIDDEN status code for not customer user
+        self.assertEqual(response.status_code, 200, 'customer cannot buy a tiket')  # 403 FORBIDDEN status code for not customer user
         logger.warning(response.status_code)
         logger.warning(response.content)  # Print with red color the content
 
@@ -34,37 +74,37 @@ class CustomerTiketBuyViewTests(TestCase):
         self.client.post(reverse('waterpark:customer-buy-tiket'), {'validity_day': date.today()})
         self.client.post(reverse('waterpark:customer-buy-tiket'), {'validity_day': date.today()+timedelta(days=55)})
         tiket = Tiket.objects.all()
-        self.assertEqual(tiket.count(), 2)
+        self.assertEqual(tiket.count(), 2, 'Tikets expected error')
 
     def test_customer_buy_tiket_validity_day_before_today(self):
         # Test code
         self.client.post(reverse('waterpark:customer-buy-tiket'), {'validity_day': date.today()-timedelta(days=1)})
         tiket = Tiket.objects.all()
-        self.assertEqual(tiket.count(), 0)  # No tikets created, out of validation range
+        self.assertEqual(tiket.count(), 0, 'No expected tikets')  # No tikets created, out of validation range
 
     def test_customer_buy_tiket_validity_day_after_a_year(self):
         # Test code
         self.client.post(reverse('waterpark:customer-buy-tiket'), {'validity_day': date.today()+timedelta(days=366)})
         tiket = Tiket.objects.all()
-        self.assertEqual(tiket.count(), 0)  # No tikets created, out of validation range
+        self.assertEqual(tiket.count(), 0, 'No expected tikets')  # No tikets created, out of validation range
 
     def test_customer_buy_tiket_check_integrity(self):
         # Test code
         self.client.post(reverse('waterpark:customer-buy-tiket'), {'validity_day': date.today()})
         tiket = Tiket.objects.all()
-        self.assertIsNotNone(tiket[0].tiket_slug)  # Tiket id created, created in override method save
-        self.assertIsNotNone(tiket[0].customer)    # Foreign key not null, tiket linked to the user 'paola98'
-        self.assertEqual(tiket[0].customer.get_username(), 'paola98')
+        self.assertIsNotNone(tiket[0].tiket_slug, 'Expected tiket id')  # Tiket id created, created in override method save
+        self.assertIsNotNone(tiket[0].customer, 'Expected assigned customer')    # Foreign key not null, tiket linked to the user 'paola98'
+        self.assertEqual(tiket[0].customer.get_username(), 'paola98', 'Wrong tiket\'s owner')
 
     def test_customer_tiket_check_integrity_after_deleted_customer(self):
         # Test code
         self.client.post(reverse('waterpark:customer-buy-tiket'), {'validity_day': date.today()})
         tiket = Tiket.objects.all()
-        self.assertEqual(tiket.count(), 1)  # Tiket created
+        self.assertEqual(tiket.count(), 1, 'Expected 1 tiket')  # Tiket created
         user = myUser.objects.filter(username='paola98')
         user.delete()
-        self.assertEqual(len(myUser.objects.all()), 0)  # User deleted
-        self.assertIsNone(tiket[0].customer)  # Tiket still saved with no customer
+        self.assertEqual(len(myUser.objects.all()), 0, 'Expected no user')  # User deleted
+        self.assertIsNone(tiket[0].customer, 'Expected null customer field')  # Tiket still saved with no customer
 
 
 class CustomerTiketListViewTests(TestCase):
@@ -84,15 +124,15 @@ class CustomerTiketListViewTests(TestCase):
         self.client.post(reverse('waterpark:customer-buy-tiket'), {'validity_day': date.today()})
         self.client.post(reverse('waterpark:customer-buy-tiket'), {'validity_day': date.today() + timedelta(days=1)})
         self.client.post(reverse('waterpark:customer-buy-tiket'), {'validity_day': date.today() + timedelta(days=2)})
-        self.assertEqual(Tiket.objects.filter(customer__username='paola98').count(), 3)  # 3 tikets created, advanced data (date.today() + timedelta(days=2))
+        self.assertEqual(Tiket.objects.filter(customer__username='paola98').count(), 3, 'Expected 3 tikets')  # 3 tikets created, advanced data (date.today() + timedelta(days=2))
         # Go to the personal tiket list
         response = self.client.get(reverse('waterpark:customer-tiket-list'))
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 200, 'Expected 200 OK')
         logger.warning(response.content)
         first_tiket_result_date = response.context['tiket_list'][0]['validity_day']
-        self.assertEqual(first_tiket_result_date, date.today() + timedelta(days=2))  # DESC ORDER paginated by 1
+        self.assertEqual(first_tiket_result_date, date.today() + timedelta(days=2), 'Expected most recent date')  # DESC ORDER paginated by 1
         customer = myUser.objects.filter(username='paola98').values('id')[0]['id']
-        self.assertEqual(response.context['tiket_list'][0]['customer_id'], customer)
+        self.assertEqual(response.context['tiket_list'][0]['customer_id'], customer, 'Wrong owner')
 
 
 class CustomerRequiredMixinTests(TestCase):
@@ -110,12 +150,12 @@ class CustomerRequiredMixinTests(TestCase):
     def test_customer_required_mixin(self):
         # For example go to the personal tiket list, a page permited just to the customers
         response = self.client.get(reverse('waterpark:customer-tiket-list'))
-        self.assertEqual(response.status_code, 403)  # Permission denied
+        self.assertEqual(response.status_code, 403, 'Expected 403 status code')  # Permission denied
         logger.warning(response.content)
 
     def test_staff_required_mixin(self):
         response = self.client.get(reverse('waterpark:staff-manage-tiket-main'))
-        self.assertEqual(response.status_code, 200)  # Permission allowed
+        self.assertEqual(response.status_code, 200, 'Expected 200 OK')  # Permission allowed
         logger.warning(response.content)
 
 
@@ -134,12 +174,12 @@ class StaffRequiredMixinTests(TestCase):
     def test_customer_required_mixin(self):
         # For example go to the personal tiket list, a page permited just to the customers
         response = self.client.get(reverse('waterpark:customer-tiket-list'))
-        self.assertEqual(response.status_code, 200)  # Permission allowed
+        self.assertEqual(response.status_code, 200, 'Expected 200 OK')  # Permission allowed
         logger.warning(response.content)
 
     def test_staff_required_mixin(self):
         response = self.client.get(reverse('waterpark:staff-manage-tiket-main'))
-        self.assertEqual(response.status_code, 403)  # Permission denied
+        self.assertEqual(response.status_code, 403, 'Expected 403 status code')  # Permission denied
         logger.warning(response.content)
 
 
@@ -159,7 +199,7 @@ class DuplicateTiketTests(TestCase):
         self.client.post(reverse('waterpark:customer-buy-tiket'), {'validity_day': date.today()})
         self.client.post(reverse('waterpark:customer-buy-tiket'), {'validity_day': date.today()})
         tiket = Tiket.objects.all()
-        self.assertEqual(tiket.count(), 1)
+        self.assertEqual(tiket.count(), 1, "Duplicated tiket at the same day")
 
 
 class ValidityDeltaFunctionTests(TestCase):
@@ -170,4 +210,5 @@ class ValidityDeltaFunctionTests(TestCase):
         logger.warning('Today date: {}'.format(today))
         logger.warning('Expected: NEXT YEAR-01-01')
         logger.warning('Target date after function: {}'.format(end_validity_first_january_next_year))
-        self.assertEqual(end_validity_first_january_next_year, date(today.year + 1, 1, 1))
+        self.assertEqual(end_validity_first_january_next_year, date(today.year + 1, 1, 1),
+                         'Date was not NEXT YEAR-01-01')
