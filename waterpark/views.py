@@ -121,6 +121,7 @@ class SearchTiketByDateListView(LoginRequiredMixin, StaffRequiredMixin, ListView
     def get_queryset(self):
         dateform = self.request.GET.get('dateform')
         tiket_list = Tiket.objects.filter(validity_day=dateform)
+        messages.success(self.request, 'Results for {} date'.format(dateform))
         return tiket_list
 
 
@@ -134,6 +135,7 @@ class SearchTiketByYearListView(LoginRequiredMixin, StaffRequiredMixin, ListView
     def get_queryset(self):
         yearform = self.request.GET.get('yearform')
         tiket_list = Tiket.objects.filter(validity_day__year=yearform).order_by('validity_day')
+        messages.success(self.request, 'Results for {} year'.format(yearform))
         return tiket_list
 
 
@@ -149,6 +151,7 @@ class SearchTiketByRangeListView(LoginRequiredMixin, StaffRequiredMixin, ListVie
         datemaxform = self.request.GET.get('datemaxform')
         if dateminform < datemaxform:
             tiket_list = Tiket.objects.filter(validity_day__range=[dateminform, datemaxform]).order_by('validity_day')
+            messages.success(self.request, 'Results for {} to {} range'.format(dateminform, datemaxform))
         else:
             tiket_list = None
             messages.warning(self.request, 'Wrong date range detected! no resultus to display')
@@ -165,6 +168,7 @@ class SearchSeasonpassByYearListView(LoginRequiredMixin, StaffRequiredMixin, Lis
     def get_queryset(self):
         yearform = self.request.GET.get('yearform')
         seasonpass_list = SeasonPass.objects.filter(validity_from__year=yearform)
+        messages.success(self.request, 'Results for {} year'.format(yearform))
         return seasonpass_list
 
 
@@ -191,6 +195,10 @@ class SearchCustomerTiketListView(LoginRequiredMixin, StaffRequiredMixin, ListVi
     def get_queryset(self):
         nameform = self.request.GET.get('nameform')
         tiket_list = Tiket.objects.filter(customer__username=nameform).order_by('-validity_day')
+        if tiket_list.count():
+            messages.success(self.request, 'Tikets found for {} customer'.format(nameform))
+        else:
+            messages.warning(self.request, 'No results for {} customer'.format(nameform))
         return tiket_list
 
 
@@ -205,4 +213,8 @@ class SearchCustomerSeasonpassListView(LoginRequiredMixin, StaffRequiredMixin, L
     def get_queryset(self):
         nameform = self.request.GET.get('nameform')
         tiket_list = SeasonPass.objects.filter(customer__username=nameform).order_by('-validity_from')
+        if tiket_list.count():
+            messages.success(self.request, 'SeasonPass found for {} customer'.format(nameform))
+        else:
+            messages.warning(self.request, 'No results for {} customer'.format(nameform))
         return tiket_list

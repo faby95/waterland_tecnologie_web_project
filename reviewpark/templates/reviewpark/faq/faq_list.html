@@ -6,6 +6,17 @@
 
     <div class="text-center" style="background-color: lightgray">
         <h1><strong><u>FAQ</u></strong></h1>
+        <div class="container p-3 my-3 border" style="background: lightblue">
+            <div class="text-center">
+                <h5 style="color: black">Searching context:</h5>
+                <form action="{% url 'reviewpark:faq-search-context' %}" method="get">
+                    <label for="contextform">Context:</label>
+                    <input type="text" id="contextform" name="contextform" required><br><br>
+                    <button type="submit" class="btn btn-info">Search</button>
+                </form><br>
+                <a href="{% url 'reviewpark:faq' %}"><button type="button" class="btn btn-secondary">Get all Faq</button></a>
+            </div>
+        </div>
     </div>
 
     <div class="container p-3 my-3 bg-dark text-white">
@@ -25,7 +36,7 @@
              {% if faq.customer %}
                 <td>{{ faq.customer.get_username }}</td>
              {% else %}
-                <td>Deleted User</td>
+                 <td><p style="color: red">Deleted User</p></td>
              {% endif %}
             </tr>
             <tr>
@@ -42,7 +53,7 @@
                 <td>{{ faq.answare }}<br><br><p>Answare date: {{ faq.answare_date }}</p></td>
              {% else %}
                 <th scope="row">FAQ ANSWARE:</th>
-                <td>No answare yet</td>
+                 <td><p style="color: red">No answare yet</p></td>
              {% endif %}
             </tr>
          </tbody>
