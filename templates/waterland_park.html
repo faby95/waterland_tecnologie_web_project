@@ -5,7 +5,7 @@
 
 {% block bodybase %}
     <br>
-    <div id="logo" class="text-center">
+    <div class="text-center">
         <img src="{% static 'img/favicon.ico' %}" alt="favicon">
     </div>
     <br>
@@ -37,8 +37,16 @@
         <h2><img src="{% static 'img/logo.png' %}" alt="logo"> <br> <small class="text-muted"><u>(Opening times)</u></small></h2>
         <p class="h4" style="color: darkslategray">We are open all days<br><br>-From 8.00am-<br>-Until 18.00pm-<br><br>In the summer we are open until 20.00pm</p>
     </div>
+    <div class="text-center">
+        <img src="{% static 'img/separator_text.png' %}" alt="separator">
+    </div>
     <br>
-    <div id="logo" class="text-center">
+    <div class="container-sm border" style="text-align: justify">
+        <h2><img src="{% static 'img/logo.png' %}" alt="logo"> <br> <small class="text-muted"><u>(How to find us)</u></small></h2>
+        <p class="h4" style="color: darkslategray">{% lorem %}</p>
+    </div>
+    <br>
+    <div class="text-center">
         <img src="{% static 'img/favicon.ico' %}" alt="favicon">
     </div>
     <br>
