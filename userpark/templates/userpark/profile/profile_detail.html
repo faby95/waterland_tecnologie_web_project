@@ -72,6 +72,8 @@
         </tbody>
         </table>
     <br>
+    <a href="{% url 'userpark:user-profile-update-password' user.slug %}"> <button type="button" class="btn btn-warning">UPDATE PASSWORD</button> </a>
+    <br><br>
     <a href="{% url 'userpark:user-profile-delete' user.slug %}"> <button type="button" class="btn btn-danger">DELETE MY PROFILE</button> </a>
     </div>
     <br>

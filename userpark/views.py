@@ -1,12 +1,13 @@
 # from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.hashers import check_password, make_password
 from userpark.models import User as myUser
-
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView, UpdateView, DeleteView
-from userpark.forms import CustomerSignUpForm, StaffSignUpForm, UpdateBirthdateForm
+from userpark.forms import CustomerSignUpForm, StaffSignUpForm, UpdateBirthdateForm, UpdatePasswordForm
 from django.contrib.auth import views as auth_views
+from django.contrib import messages
 
 
 # Create your views here.
@@ -112,6 +113,32 @@ class UserUpdateBirthDateView(LoginRequiredMixin, SuccessMessageMixin, UpdateVie
     slug_field = 'slug'
     login_url = 'userpark:login'  # Redirect Login needed
     redirect_field_name = 'redirect_to'
+
+
+class UserUpdatePasswordView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    model = myUser
+    form_class = UpdatePasswordForm
+    template_name = 'userpark/profile/update_password.html'
+    success_url = reverse_lazy('userpark:user-profile')
+    success_message = 'Password updated'
+    slug_field = 'slug'
+    login_url = 'userpark:login'  # Redirect Login needed
+    redirect_field_name = 'redirect_to'
+
+    def form_valid(self, form):
+        currentpassword = self.request.user.password
+        currentpasswordentered = form.cleaned_data.get("current_password")
+        matchcheck = check_password(currentpasswordentered, currentpassword)
+        if matchcheck:
+            self.object = form.save(commit=False)
+            self.object.password = make_password(self.object.password)
+            form.save()
+            return super().form_valid(form)
+        else:
+            messages.warning(self.request, 'Current password is not the expected one!')
+            return super().form_invalid(form)
+
+# User delete view
 
 
 class UserDeleteProfileView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):

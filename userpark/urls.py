@@ -1,9 +1,6 @@
-# from django.conf import settings
-# from django.conf.urls.static import static
-# + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from userpark.views import UserCreateView, CustomerSignUpView, StaffSignUpView, UserLoginView, UserProfileView, UserUpdatePropicView, UserUpdateFirstNameView, UserUpdateLastNameView, UserUpdateGenderView, UserUpdateEmailView, UserUpdateBirthDateView, UserDeleteProfileView
+from userpark.views import UserCreateView, CustomerSignUpView, StaffSignUpView, UserLoginView, UserProfileView, UserUpdatePropicView, UserUpdateFirstNameView, UserUpdateLastNameView, UserUpdateGenderView, UserUpdateEmailView, UserUpdateBirthDateView, UserUpdatePasswordView, UserDeleteProfileView
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -23,5 +20,6 @@ urlpatterns = [
     path('user_profile/<slug:slug>/update_gender/', UserUpdateGenderView.as_view(), name='user-profile-update-gender'),
     path('user_profile/<slug:slug>/update_email/', UserUpdateEmailView.as_view(), name='user-profile-update-email'),
     path('user_profile/<slug:slug>/update_birth_date/', UserUpdateBirthDateView.as_view(), name='user-profile-update-birthdate'),
+    path('user_profile/<slug:slug>/update_password/', UserUpdatePasswordView.as_view(), name='user-profile-update-password'),
     path('user_profile/<slug:slug>/delete_profile/', UserDeleteProfileView.as_view(), name='user-profile-delete'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
