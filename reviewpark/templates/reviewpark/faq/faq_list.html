@@ -9,7 +9,7 @@
         <div class="container p-3 my-3 border" style="background: lightblue">
             <div class="text-center">
                 <h5 style="color: black">Searching context:</h5>
-                <form action="{% url 'reviewpark:faq-search-context' %}" method="get">
+                <form action="{% url 'reviewpark:faq-search-context' %}" method="get">{% csrf_token %}
                     <label for="contextform">Context:</label>
                     <input type="text" id="contextform" name="contextform" required><br><br>
                     <button type="submit" class="btn btn-info">Search</button>
