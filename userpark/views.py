@@ -8,7 +8,13 @@ from django.views.generic import CreateView, TemplateView, UpdateView, DeleteVie
 from userpark.forms import CustomerSignUpForm, StaffSignUpForm, UpdateBirthdateForm, UpdatePasswordForm
 from django.contrib.auth import views as auth_views
 from django.contrib import messages
+from django.contrib.auth.signals import user_logged_out
+from django.dispatch import receiver
 
+
+@receiver(user_logged_out)
+def on_user_logged_out(sender, request, **kwargs):
+    messages.add_message(request, messages.SUCCESS, 'Logged Out')
 
 # Create your views here.
 

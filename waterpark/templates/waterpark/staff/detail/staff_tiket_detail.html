@@ -24,6 +24,30 @@
              <td>{{ tiket.customer.get_username }}</td>
             </tr>
             <tr>
+            <th scope="row">CUSTOMER BIRTHDAY:</th>
+             <td>{{ tiket.customer.birth_date }}</td>
+            </tr>
+            <tr>
+            <th scope="row">CUSTOMER GENDER:</th>
+             <td>{{ tiket.customer.gender }}</td>
+            </tr>
+            <tr>
+            <th scope="row">CUSTOMER EMAIL:</th>
+             <td>{{ tiket.customer.email }}</td>
+            </tr>
+            {% if tiket.customer.first_name %}
+                <tr>
+                <th scope="row">CUSTOMER FIRST NAME:</th>
+                <td>{{ tiket.customer.first_name }}</td>
+                </tr>
+            {% endif %}
+            {% if tiket.customer.last_name %}
+                <tr>
+                <th scope="row">CUSTOMER LAST NAME:</th>
+                <td>{{ tiket.customer.last_name }}</td>
+                </tr>
+            {% endif %}
+            <tr>
             <th scope="row">TIKET ID:</th>
              <td>{{ tiket.tiket_slug }}</td>
             </tr>

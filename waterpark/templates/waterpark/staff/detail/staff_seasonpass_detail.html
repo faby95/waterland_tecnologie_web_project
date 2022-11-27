@@ -25,6 +25,30 @@
              <td>{{ seasonpass.customer.get_username }}</td>
             </tr>
             <tr>
+            <th scope="row">CUSTOMER BIRTHDAY:</th>
+             <td>{{ seasonpass.customer.birth_date }}</td>
+            </tr>
+            <tr>
+            <th scope="row">CUSTOMER GENDER:</th>
+             <td>{{ seasonpass.customer.gender }}</td>
+            </tr>
+            <tr>
+            <th scope="row">CUSTOMER EMAIL:</th>
+             <td>{{ seasonpass.customer.email }}</td>
+            </tr>
+            {% if seasonpass.customer.first_name %}
+                <tr>
+                <th scope="row">CUSTOMER FIRST NAME:</th>
+                <td>{{ seasonpass.customer.first_name }}</td>
+                </tr>
+            {% endif %}
+            {% if seasonpass.customer.last_name %}
+                <tr>
+                <th scope="row">CUSTOMER LAST NAME:</th>
+                <td>{{ seasonpass.customer.last_name }}</td>
+                </tr>
+            {% endif %}
+            <tr>
             <th scope="row">SEASON PASS PHOTO:</th>
              <td><img src="/media/{{ MEDIA_URL }}{{ seasonpass.seasonpass_photo }}" alt="propic" class="img-thumbnail"></td>
             </tr>
