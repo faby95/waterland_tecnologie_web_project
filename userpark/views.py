@@ -138,11 +138,11 @@ class UserUpdatePasswordView(LoginRequiredMixin, SuccessMessageMixin, UpdateView
         if matchcheck:
             self.object = form.save(commit=False)
             self.object.password = make_password(self.object.password)
-            form.save()
+            self.object.save()
             return super().form_valid(form)
         else:
             messages.warning(self.request, 'Current password is not the expected one!')
-            return super().form_invalid(form)
+            return self.form_invalid(form)
 
 # User delete view
 
