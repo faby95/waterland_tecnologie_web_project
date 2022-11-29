@@ -1,17 +1,17 @@
 {% extends 'navbase.html' %}
 {% load crispy_forms_filters %}
 
-{% block title %}Profile: {{ user.username }}, buy Tiket{% endblock %}
+{% block title %}Profile: {{ user.username }}, buy Ticket{% endblock %}
 
 {% block bodybase %}
 
     <div class="container p-3 my-3 bg-dark text-white">
-        <h1 class="display-4">Buy a Tiket:</h1>
+        <h1 class="display-4">Buy a Ticket:</h1>
         <p>Choose the day you want to reach WaterLand</p>
-        <p>-$15 tiket price-</p>
+        <p>-$15 ticket price-</p>
         <form method="post">{% csrf_token %}
         {{ form|crispy }}
-        <button type="submit" class="btn btn-primary">Buy a Tiket</button>
+        <button type="submit" class="btn btn-primary">Buy a Ticket</button>
         <a href="{% url 'waterpark:customerservices' %}"> <button type="button" class="btn btn-primary">Back</button> </a>
         </form>
     </div>

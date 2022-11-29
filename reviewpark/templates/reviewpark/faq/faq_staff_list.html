@@ -40,12 +40,12 @@
         </table>
         </div>
         <br>
-        <a href="{% url 'reviewpark:faq-staff-answare' faq.pk %}"><button type="button" class="btn btn-info">ANSWER</button></a>
+        <a href="{% url 'reviewpark:faq-staff-answare' faq.pk %}"><button type="button" class="btn btn-info">ANSWARE</button></a>
         <a href="{% url 'reviewpark:faq-staff-delete' faq.pk %}"><button type="button" class="btn btn-danger">DELETE FAQ</button></a>
         <br>
     {% empty %}
         <div class="text-center">
-            <h1><strong><u>NO FAQ TO ANSWER YET</u></strong></h1>
+            <h1><strong><u>NO FAQ TO ANSWARE YET</u></strong></h1>
         </div>
     {% endfor %}
     </div>

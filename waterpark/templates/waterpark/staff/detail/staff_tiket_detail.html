@@ -1,10 +1,10 @@
 {% extends 'navbase.html' %}
 
-{% block title %}STAFF: Tikets results{% endblock %}
+{% block title %}STAFF: Tickets results{% endblock %}
 
 {% block bodybase %}
     <div class="text-center" style="background-color: lightgray">
-        <h1><strong><u>TIKETS RESULTS:</u></strong></h1><br>
+        <h1><strong><u>TICKETS RESULTS:</u></strong></h1><br>
         <a href="{% url 'waterpark:staff-search-tiket-for-user' %}"><button type="button" class="btn btn-info">Back</button></a>
         </div>
     <div class="container p-3 my-3 bg-dark text-white">
@@ -14,7 +14,7 @@
         <table class="table table-striped table-dark">
           <thead>
             <tr>
-                <th scope="col"><strong>TIKET FIELDS</strong></th>
+                <th scope="col"><strong>TICKET FIELDS</strong></th>
               <th scope="col"><strong>INFO</strong></th>
             </tr>
           </thead>
@@ -48,7 +48,7 @@
                 </tr>
             {% endif %}
             <tr>
-            <th scope="row">TIKET ID:</th>
+            <th scope="row">TICKET ID:</th>
              <td>{{ tiket.tiket_slug }}</td>
             </tr>
             <tr>
@@ -69,7 +69,7 @@
         <br>
     {% empty %}
         <div class="text-center">
-            <h1><strong><u>NO TIKETS FOUND</u></strong></h1>
+            <h1><strong><u>NO TICKETS FOUND</u></strong></h1>
         </div>
     {% endfor %}
     </div>

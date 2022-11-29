@@ -1,10 +1,10 @@
 {% extends 'navbase.html' %}
 
-{% block title %}Tikets - Profile: {{ user.username }}{% endblock %}
+{% block title %}Tickets - Profile: {{ user.username }}{% endblock %}
 
 {% block bodybase %}
     <div class="text-center" style="background-color: lightgray">
-        <h1><strong><u>MY TIKETS</u></strong></h1>
+        <h1><strong><u>MY TICKETS</u></strong></h1>
     </div>
     <div class="container p-3 my-3 bg-dark text-white">
     {% for tiket in tiket_list %}
@@ -13,13 +13,13 @@
         <table class="table table-striped table-dark">
           <thead>
             <tr>
-                <th scope="col"><strong>TIKET FIELDS</strong></th>
+                <th scope="col"><strong>TICKET FIELDS</strong></th>
               <th scope="col"><strong>INFO</strong></th>
             </tr>
           </thead>
         <tbody>
             <tr>
-            <th scope="row">TIKET ID:</th>
+            <th scope="row">TICKET ID:</th>
              <td>{{ tiket.tiket_slug }}</td>
             </tr>
             <tr>

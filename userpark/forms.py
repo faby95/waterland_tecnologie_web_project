@@ -56,7 +56,8 @@ class StaffSignUpForm(UserCreationForm):
         if auth.count():
             auth_dict = auth.values('code', 'key')[0]  # get dict of the instance
             if keystaff == auth_dict['key'] and code == auth_dict['code']:
-                auth.update(is_used=True)
+                if cleaned_data.get('password1') == cleaned_data.get('password2'):
+                    auth.update(is_used=True)
             else:
                 self.add_error('staff_key', u'Invalid combination!')
                 self.add_error('staff_assigned_code', u'Invalid combination!')
