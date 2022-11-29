@@ -48,7 +48,7 @@ pipenv install
 ```sh
 pipenv shell
 ```
-> (Opzionale) Per ulteriore verifica (una volta all'interno dell'ambiente virtuale), se vogliamo accertarci che tutte le dipendenze di interesse siano state installate digitare il seguente comando
+> (Opzionale) Per ulteriore verifica (una volta all'interno dell'ambiente virtuale), se vogliamo accertarci che tutte le dipendenze di interesse siano state installate digitare il seguente comando. Se l'installazione automatica non va a buon fine, una volta all'interno dell'ambiente virtuale installare le dipendenze a mano (elencate nella sezione pip install ... di questo file)
 ```sh
 pip freeze
 ```
