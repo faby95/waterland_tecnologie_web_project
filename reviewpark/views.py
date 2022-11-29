@@ -133,7 +133,8 @@ class SearchContextFaqView(ListView):
         contextform = self.request.GET.get('contextform')
         faq_list = Faq.objects.filter(Q(ask__contains=contextform) | Q(answare__contains=contextform)).order_by('-faq_date')
         if faq_list.count():
-            messages.success(self.request, 'Found {} Faq about context ({})'.format(faq_list.count(), contextform))
+            if 'page' not in self.request.GET.keys():
+                messages.success(self.request, 'Found {} Faq about context ({})'.format(faq_list.count(), contextform))
         else:
             messages.warning(self.request, 'No Faq found about context ({})'.format(contextform))
         return faq_list
@@ -151,7 +152,8 @@ class SearchFeedbackByStarsView(ListView):
             if 1 <= starsform <= 5:
                 feedback_list = Feedback.objects.filter(stars=starsform).order_by('-feedback_date')
                 if feedback_list.count():
-                    messages.success(self.request, 'Found {} Feedback with {} stars'.format(feedback_list.count(), starsform))
+                    if 'page' not in self.request.GET.keys():
+                        messages.success(self.request, 'Found {} Feedback with {} stars'.format(feedback_list.count(), starsform))
                 else:
                     messages.warning(self.request, 'No Feedback found with {} stars'.format(starsform))
             else:

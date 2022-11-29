@@ -10,7 +10,7 @@
         <div class="container p-3 my-3 border" style="background: lightblue">
             <div class="text-center">
                 <h5 style="color: black">Searching Feedback by stars:</h5>
-                <form action="{% url 'reviewpark:feedback-search-stars' %}" method="get">{% csrf_token %}
+                <form action="{% url 'reviewpark:feedback-search-stars' %}" method="get">
                     <label for="starsform">Stars:</label>
                     <input type="number" id="starsform" name="starsform" min="1" max="5" required><br><br>
                     <button type="submit" class="btn btn-info">Search</button>
@@ -81,8 +81,8 @@
         <div class="pagination">
         <span class="step-links">
             {% if page_obj.has_previous %}
-                <a href="?page=1">&laquo; <button type="button" class="btn btn-info">First</button></a>
-                <a href="?page={{ page_obj.previous_page_number }}"><button type="button" class="btn btn-primary">Previous</button></a>
+                <a href="?page=1{% if request.GET.starsform %}&starsform={{ request.GET.starsform }}{% endif %}">&laquo; <button type="button" class="btn btn-info">First</button></a>
+                <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.starsform %}&starsform={{ request.GET.starsform }}{% endif %}"><button type="button" class="btn btn-primary">Previous</button></a>
             {% endif %}
 
             <span class="current">
@@ -90,8 +90,8 @@
             </span>
 
             {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}"><button type="button" class="btn btn-primary">Next</button></a>
-                <a href="?page={{ page_obj.paginator.num_pages }}"><button type="button" class="btn btn-info">Last</button> &raquo;</a>
+                <a href="?page={{ page_obj.next_page_number }}{% if request.GET.starsform %}&starsform={{ request.GET.starsform }}{% endif %}"><button type="button" class="btn btn-primary">Next</button></a>
+                <a href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.starsform %}&starsform={{ request.GET.starsform }}{% endif %}"><button type="button" class="btn btn-info">Last</button> &raquo;</a>
             {% endif %}
         </span>
         </div>

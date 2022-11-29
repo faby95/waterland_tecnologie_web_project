@@ -196,7 +196,8 @@ class SearchCustomerTiketListView(LoginRequiredMixin, StaffRequiredMixin, ListVi
         nameform = self.request.GET.get('nameform')
         tiket_list = Tiket.objects.filter(customer__username=nameform).order_by('-validity_day')
         if tiket_list.count():
-            messages.success(self.request, 'Tikets found for {} customer'.format(nameform))
+            if 'page' not in self.request.GET.keys():
+                messages.success(self.request, 'Tikets found for {} customer'.format(nameform))
         else:
             messages.warning(self.request, 'No results for {} customer'.format(nameform))
         return tiket_list
@@ -214,7 +215,8 @@ class SearchCustomerSeasonpassListView(LoginRequiredMixin, StaffRequiredMixin, L
         nameform = self.request.GET.get('nameform')
         tiket_list = SeasonPass.objects.filter(customer__username=nameform).order_by('-validity_from')
         if tiket_list.count():
-            messages.success(self.request, 'SeasonPass found for {} customer'.format(nameform))
+            if 'page' not in self.request.GET.keys():
+                messages.success(self.request, 'SeasonPass found for {} customer'.format(nameform))
         else:
             messages.warning(self.request, 'No results for {} customer'.format(nameform))
         return tiket_list
