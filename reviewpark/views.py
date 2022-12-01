@@ -109,7 +109,7 @@ class FaqStaffAnswareView(LoginRequiredMixin, StaffRequiredMixin, SuccessMessage
     form_class = FaqAnswareForm
     template_name = 'reviewpark/faq/faq_answer.html'
     success_url = reverse_lazy('reviewpark:faq-staff-list')
-    success_message = 'Answare success'
+    success_message = 'Answer success'
     login_url = 'userpark:login'  # Redirect Login needed
     redirect_field_name = 'redirect_to'
 

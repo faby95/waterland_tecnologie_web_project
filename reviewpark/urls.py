@@ -16,7 +16,7 @@ urlpatterns = [
     path('faq/', FaqListView.as_view(), name='faq'),
     path('faq/staff_list/', FaqStaffListView.as_view(), name='faq-staff-list'),
     path('faq/staff_list/<int:pk>/delete_faq/', FaqStaffDeleteView.as_view(), name='faq-staff-delete'),
-    path('faq/staff_list/<int:pk>/answare_faq/', FaqStaffAnswareView.as_view(), name='faq-staff-answare'),
+    path('faq/staff_list/<int:pk>/answer_faq/', FaqStaffAnswareView.as_view(), name='faq-staff-answare'),
     path('faq/search/', SearchContextFaqView.as_view(), name='faq-search-context'),
     path('feedback/search/', SearchFeedbackByStarsView.as_view(), name='feedback-search-stars'),
 

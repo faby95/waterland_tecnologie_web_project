@@ -31,7 +31,7 @@ class Faq(models.Model):
     faq_date = models.DateTimeField(default=timezone.now, null=False, blank=False)
     ask = models.TextField(max_length=300, null=False, blank=False, help_text='Write your question here, max 300 characters', verbose_name='FAQ')
     answare = models.TextField(max_length=500, null=True, default=None,
-                               help_text='Answare to the customer\'s question here, max 500 characters')
+                               help_text='Answare to the customer\'s question here, max 500 characters', verbose_name='Answer')
     answare_date = models.DateTimeField(null=True, default=None)
 
     class Meta:

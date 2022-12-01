@@ -1,20 +1,20 @@
 {% extends 'navbase.html' %}
 {% load crispy_forms_filters %}
 
-{% block title %}WaterLand, ask a FAQ{% endblock %}
+{% block title %}WaterLand, answer to the FAQ{% endblock %}
 
 {% block bodybase %}
 
     <div class="container p-3 my-3 bg-dark text-white">
-        <h1 class="display-4">ANSWARE FAQ:</h1>
+        <h1 class="display-4">ANSWER FAQ:</h1>
         <br>
-        <p>Answare to the FAQ written by "{{ object.customer.get_username }}":</p>
+        <p>Answer to the FAQ written by "{{ object.customer.get_username }}":</p>
         <p>{{ object.ask }}</p>
         <br>
         <form method="post">{% csrf_token %}
         {{ form|crispy }}
-        <button type="submit" class="btn btn-primary">ANSWARE</button>
-        <a href="{% url 'reviewpark:faq-staff-list' %}"> <button type="button" class="btn btn-light">Back to FAQ answare zone</button> </a>
+        <button type="submit" class="btn btn-primary">ANSWER</button>
+        <a href="{% url 'reviewpark:faq-staff-list' %}"> <button type="button" class="btn btn-light">Back to FAQ answer zone</button> </a>
         </form>
     </div>
     <br>
