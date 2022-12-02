@@ -40,7 +40,7 @@ class CustomerBuyTiketView(LoginRequiredMixin, CustomerRequiredMixin, SuccessMes
             return super().form_valid(form)
 
     def tiket_already_taken(self):
-        messages.warning(self.request, 'You already got a tiket for this date!')
+        messages.warning(self.request, 'You already got a ticket for this date!')
 
     def form_invalid(self, form):
         return super().form_invalid(form)
