@@ -56,7 +56,7 @@ class StaffSignUpForm(UserCreationForm):
         if auth.count():
             auth_dict = auth.values('code', 'key')[0]  # get dict of the instance
             if keystaff == auth_dict['key'] and code == auth_dict['code']:
-                if cleaned_data.get('password1') == cleaned_data.get('password2'):
+                if cleaned_data.get('password1') == cleaned_data.get('password2') and self.is_valid():
                     auth.update(is_used=True)
             else:
                 self.add_error('staff_key', u'Invalid combination!')
@@ -82,7 +82,7 @@ class UpdateBirthdateForm(forms.ModelForm):
         model = myUser
         fields = ['birth_date']
         widgets = {
-            'birth_date': DateInput(),
+            'birth_date': DateInput(),  # Complete range
         }
 
 

@@ -2,7 +2,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.hashers import check_password, make_password
-from userpark.models import User as myUser
+from userpark.models import User as myUser, StaffAuthTable
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView, UpdateView, DeleteView
 from userpark.forms import CustomerSignUpForm, StaffSignUpForm, UpdateBirthdateForm, UpdatePasswordForm
@@ -15,6 +15,7 @@ from django.dispatch import receiver
 @receiver(user_logged_out)
 def on_user_logged_out(sender, request, **kwargs):
     messages.add_message(request, messages.SUCCESS, 'Logged Out')
+
 
 # Create your views here.
 
@@ -44,13 +45,22 @@ class StaffSignUpView(SuccessMessageMixin, CreateView):
     success_url = reverse_lazy('home')
     success_message = 'Your staff user has been created'
 
+    def form_invalid(self, form):
+        if form.cleaned_data.get('staff_assigned_code'):
+            c = form.cleaned_data.get('staff_assigned_code')
+            keys = StaffAuthTable.objects.filter(code=c)
+            keys.update(is_used=False)
+        return super().form_invalid(form)
+
+
 # User profile view
 
 
 class UserProfileView(LoginRequiredMixin, TemplateView):
     template_name = 'userpark/profile/profile_detail.html'
-    login_url = 'userpark:login'          # Redirect Login needed
+    login_url = 'userpark:login'  # Redirect Login needed
     redirect_field_name = 'redirect_to'
+
 
 # Update user info view
 
@@ -143,6 +153,7 @@ class UserUpdatePasswordView(LoginRequiredMixin, SuccessMessageMixin, UpdateView
         else:
             messages.warning(self.request, 'Current password is not the expected one!')
             return self.form_invalid(form)
+
 
 # User delete view
 
