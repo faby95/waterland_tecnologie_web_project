@@ -44,7 +44,7 @@ class TestTicket(TestCase):
         self.assertEqual(self.t.customer.get_username(), 'paola98', 'Got wrong username')
 
     def test__str__method(self):
-        self.assertEqual(self.t.__str__(), f'{self.t.customer.get_username()} - Tiket:{self.t.tiket_slug}',
+        self.assertEqual(self.t.__str__(), f'{self.t.customer.get_username()} - Ticket:{self.t.tiket_slug}',
                          "Wrong self rappresentation")
 
     def testSaveMethod(self):

@@ -34,8 +34,11 @@ class Tiket(models.Model):
                                     default=date.today, blank=False, verbose_name='Entry Waterland date')
     cost = models.IntegerField(default=15, null=False, blank=False)
 
+    class Meta:
+        verbose_name_plural = 'Tickets'
+
     def __str__(self):
-        return f'{self.customer.username} - Tiket:{self.tiket_slug}'
+        return f'{self.customer.username} - Ticket:{self.tiket_slug}'
 
     def save(self, *args, **kwargs):
         if not self.tiket_slug:
