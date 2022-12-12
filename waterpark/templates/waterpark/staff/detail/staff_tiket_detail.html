@@ -5,6 +5,9 @@
 {% block bodybase %}
     <div class="text-center" style="background-color: lightgray">
         <h1><strong><u>TICKETS RESULTS:</u></strong></h1><br>
+        <p><strong>Today: "{% now 'd-M-Y' %}" --> {% now 'D' %}</strong></p>
+        <a href="{% url 'waterpark:staff-search-tiket-for-user-results' %}?nameform={{ request.GET.nameform }}"><button type="button" class="btn btn-light">Get all tickets of {{ request.GET.nameform }}</button></a><br><br>
+        <a href="{% url 'waterpark:staff-search-tiket-for-user-results-today' %}?nameform={{ request.GET.nameform }}"><button type="button" class="btn btn-success">Get "{% now 'd-M-Y' %}" ticket of {{ request.GET.nameform }}</button></a><br><br>
         <a href="{% url 'waterpark:staff-search-tiket-for-user' %}"><button type="button" class="btn btn-info">Back</button></a>
         </div>
     <div class="container p-3 my-3 bg-dark text-white">

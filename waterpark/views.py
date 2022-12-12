@@ -220,3 +220,39 @@ class SearchCustomerSeasonpassListView(LoginRequiredMixin, StaffRequiredMixin, L
         else:
             messages.warning(self.request, 'No results for {} customer'.format(nameform))
         return tiket_list
+
+
+class GetTiketTodayView(LoginRequiredMixin, CustomerRequiredMixin, ListView):
+    model = Tiket
+    template_name = 'waterpark/customer/tikets/my_tiket_list.html'
+    context_object_name = "tiket_list"  # default is object_list
+    paginate_by = 1
+    login_url = 'userpark:login'  # Redirect Login needed
+    redirect_field_name = 'redirect_to'
+
+    def get_queryset(self):
+        queryset = Tiket.objects.filter(customer=self.request.user, validity_day=date.today())
+        if queryset.count():
+            messages.success(self.request, 'You got the ticket today! Enjoy your day to Waterland')
+        else:
+            messages.warning(self.request,
+                             'No ticket found, you should buy the ticket today if you wanna come to Waterland')
+        return queryset
+
+
+class GetTiketTodayStaffView(LoginRequiredMixin, StaffRequiredMixin, ListView):
+    model = Tiket
+    template_name = 'waterpark/staff/detail/staff_tiket_detail.html'
+    context_object_name = "tiket_list"  # default is object_list
+    paginate_by = 1
+    login_url = 'userpark:login'  # Redirect Login needed
+    redirect_field_name = 'redirect_to'
+
+    def get_queryset(self):
+        nameform = self.request.GET.get('nameform')
+        queryset = Tiket.objects.filter(customer__username=nameform, validity_day=date.today())
+        if queryset.count():
+            messages.success(self.request, '({}) Ticket found for today'.format(nameform))
+        else:
+            messages.warning(self.request, '({}) No ticket found for today'.format(nameform))
+        return queryset

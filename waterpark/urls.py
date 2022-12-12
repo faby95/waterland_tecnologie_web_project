@@ -1,5 +1,5 @@
 from django.urls import path
-from waterpark.views import CustomerServiceMenuView, CustomerBuyTiketView, CustomerBuySeasonPassView, CustomerTiketListView, CustomerSeasonPassListView, StaffManageTiketMainView, StaffManageSeasonpassMainView, SearchTiketByDateListView, SearchTiketByYearListView, SearchTiketByRangeListView, SearchSeasonpassByYearListView, SearchCustomerTiketView, SearchCustomerSeasonpassView, SearchCustomerTiketListView, SearchCustomerSeasonpassListView
+from waterpark.views import CustomerServiceMenuView, CustomerBuyTiketView, CustomerBuySeasonPassView, CustomerTiketListView, CustomerSeasonPassListView, StaffManageTiketMainView, StaffManageSeasonpassMainView, SearchTiketByDateListView, SearchTiketByYearListView, SearchTiketByRangeListView, SearchSeasonpassByYearListView, SearchCustomerTiketView, SearchCustomerSeasonpassView, SearchCustomerTiketListView, SearchCustomerSeasonpassListView, GetTiketTodayView, GetTiketTodayStaffView
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -23,5 +23,7 @@ urlpatterns = [
     path('customer_search_ticket/customer/', SearchCustomerTiketListView.as_view(), name='staff-search-tiket-for-user-results'),
     path('customer_search_seasonpass/', SearchCustomerSeasonpassView.as_view(), name='staff-search-seasonpass-for-user'),
     path('customer_search_seasonpass/customer/', SearchCustomerSeasonpassListView.as_view(), name='staff-search-seasonpass-for-user-results'),
+    path('tickets&seasonpass/my_tickets/today', GetTiketTodayView.as_view(), name='customer-tiket-list-today'),
+    path('customer_search_ticket/customer/today', GetTiketTodayStaffView.as_view(), name='staff-search-tiket-for-user-results-today'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
