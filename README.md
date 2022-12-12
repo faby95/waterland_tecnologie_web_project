@@ -6,7 +6,7 @@
 
 ## Requisiti:
 #### (Pre-requisiti da avere installato)
-* __Python__ (Ho utilizzato la versione 3.10, quindi dalla 3.10 o superiori sicuramente vanno bene, nel Pipfile ho inserito la versione '*' per facilitarne il processo di installazione (andrà ad utilizzare la versione di python corrente che trova), assicuratevi di avere sul pc una versione python >= 3.10)
+* __Python__ (Ho utilizzato la versione 3.10, quindi dalla 3.10 o superiori sicuramente vanno bene, nel Pipfile ho inserito la versione '*' per facilitarne il processo di installazione (andrà ad utilizzare la versione di python corrente che trova), assicuratevi di avere sul pc una versione python >= 3.10 (Nota aggiornata: ho testato il sito anche con le versioni python 3.7 e 3.8 e funziona correttamente))
 * __Pipenv__ (Nel progetto è presente un Pipfile che permetterà l'installazione automatica delle dipendenze una volta installato l'ambiente virtuale, verrà creato automaticamente il Pipfile.lock)
 #### (Framework utilizzato)
 * __Django__ (Verrà installato automaticamente all'installazione dell'ambiente virtuale, è tutto contenuto nel Pipfile)
