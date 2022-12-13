@@ -2,7 +2,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from waterlandmixins.mixins import CustomerRequiredMixin, StaffRequiredMixin, PurchaseRequiredMixin
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
+from django.http import HttpResponseRedirect
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from reviewpark.models import Feedback, Faq
 from reviewpark.forms import FeedbackForm, FaqAskForm, FaqAnswareForm
@@ -103,6 +104,14 @@ class FaqStaffDeleteView(LoginRequiredMixin, StaffRequiredMixin, SuccessMessageM
     login_url = 'userpark:login'  # Redirect Login needed
     redirect_field_name = 'redirect_to'
 
+    def dispatch(self, request, *args, **kwargs):
+        f = Faq.objects.filter(pk=self.kwargs.get('pk'))
+        if f.count():
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            messages.warning(self.request, 'Faq already deleted by another staff')
+            return HttpResponseRedirect(reverse('reviewpark:faq-staff-list'))
+
 
 class FaqStaffAnswareView(LoginRequiredMixin, StaffRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Faq
@@ -113,6 +122,19 @@ class FaqStaffAnswareView(LoginRequiredMixin, StaffRequiredMixin, SuccessMessage
     login_url = 'userpark:login'  # Redirect Login needed
     redirect_field_name = 'redirect_to'
 
+    def dispatch(self, request, *args, **kwargs):
+        f_list = Faq.objects.filter(pk=self.kwargs.get('pk'))
+        if f_list.count():
+            f = f_list.get(pk=self.kwargs.get('pk'))
+            if f.answare:
+                messages.warning(self.request, 'Faq recently got already an answer')
+                return HttpResponseRedirect(reverse('reviewpark:faq-staff-list'))
+            else:
+                return super().dispatch(request, *args, **kwargs)
+        else:
+            messages.warning(self.request, 'Faq deleted by another staff')
+            return HttpResponseRedirect(reverse('reviewpark:faq-staff-list'))
+
 
 class FeedbackStaffDeleteView(LoginRequiredMixin, StaffRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Feedback
@@ -121,6 +143,14 @@ class FeedbackStaffDeleteView(LoginRequiredMixin, StaffRequiredMixin, SuccessMes
     success_message = 'Feedback deleted'
     login_url = 'userpark:login'  # Redirect Login needed
     redirect_field_name = 'redirect_to'
+
+    def dispatch(self, request, *args, **kwargs):
+        f = Feedback.objects.filter(pk=self.kwargs.get('pk'))
+        if f.count():
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            messages.warning(self.request, 'Feedback already deleted by another staff')
+            return HttpResponseRedirect(reverse('reviewpark:feedback-list'))
 
 
 class SearchContextFaqView(ListView):
