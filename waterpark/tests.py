@@ -22,14 +22,23 @@ class TestTicket(TestCase):
 
     def testSetUpCreation(self):
         self.assertIsNotNone(self.t, 't do not exists')
+        self.assertIsNotNone(self.t.customer, 'No customer associated')
 
     # Consistenza architetturale
-    def testTiketObj(self):
+    def testTicketObj(self):
         self.assertTrue(isinstance(self.t, Ticket), 't is not a Ticket')
+
+    def testCustomerForeignkeyObj(self):
+        self.assertTrue(isinstance(self.t.customer, myUser), 'Customer is not a user')
 
     def testDefaultAttribute(self):
         self.assertEqual(self.t.cost, 15, 'Wrong default cost attribute')
         self.assertIsNotNone(self.t.date_of_purchase, 'This field cannot be null')
+        self.assertEqual(self.t.date_of_purchase.date(), date.today(), 'Wrong purchase date')
+
+    def testValidityDay(self):
+        self.assertIsNotNone(self.t.validity_day, 'Validity day cannot be null')
+        self.assertEqual(self.t.validity_day, date.today()+timedelta(days=20), 'Wrong validity day')
 
     # Coerenza funzionale, metodi che hanno subito un override, metodi utilizzati dal modello
     def testMethods(self):
@@ -48,7 +57,7 @@ class TestTicket(TestCase):
                          "Wrong self rappresentation")
 
     def testSaveMethod(self):
-        self.assertIsNotNone(self.t.tiket_slug, "Ticket slug do not created, warning! it cannot be null")
+        self.assertIsNotNone(self.t.tiket_slug, "Ticket slug do not created, it cannot be null")
 
     def tearDown(self):
         self.t.delete()
