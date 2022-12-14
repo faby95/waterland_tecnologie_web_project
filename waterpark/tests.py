@@ -61,11 +61,12 @@ class TestTicket(TestCase):
 
     def tearDown(self):
         self.t.delete()
+        myUser.objects.get(username='paola98').delete()
     # validity_date attribute range tested in view, customer use the view to interact with database
     # view use validation logic before to save in database
 
 
-class CustomerTiketBuyViewTests(TestCase):
+class CustomerTicketBuyViewTests(TestCase):
 
     def setUp(self):
         # Setup run before every test method.
@@ -122,7 +123,7 @@ class CustomerTiketBuyViewTests(TestCase):
         self.assertIsNone(tiket[0].customer, 'Expected null customer field')  # Ticket still saved with no customer
 
 
-class CustomerTiketListViewTests(TestCase):
+class CustomerTicketListViewTests(TestCase):
 
     def setUp(self):
         # Setup run before every test method.
@@ -149,6 +150,9 @@ class CustomerTiketListViewTests(TestCase):
         customer = myUser.objects.filter(username='paola98').values('id')[0]['id']
         self.assertEqual(response.context['tiket_list'][0]['customer_id'], customer, 'Wrong owner')
 
+    def tearDown(self):
+        myUser.objects.get(username='paola98').delete()
+
 
 class CustomerRequiredMixinTests(TestCase):
 
@@ -172,6 +176,9 @@ class CustomerRequiredMixinTests(TestCase):
         response = self.client.get(reverse('waterpark:staff-manage-tiket-main'))
         self.assertEqual(response.status_code, 200, 'Expected 200 OK')  # Permission allowed
         logger.warning(response.content)
+
+    def tearDown(self):
+        myUser.objects.get(username='paola98').delete()
 
 
 class StaffRequiredMixinTests(TestCase):
@@ -197,8 +204,11 @@ class StaffRequiredMixinTests(TestCase):
         self.assertEqual(response.status_code, 403, 'Expected 403 status code')  # Permission denied
         logger.warning(response.content)
 
+    def tearDown(self):
+        myUser.objects.get(username='paola98').delete()
 
-class DuplicateTiketTests(TestCase):
+
+class DuplicateTicketTests(TestCase):
 
     def setUp(self):
         # Setup run before every test method.
@@ -215,6 +225,9 @@ class DuplicateTiketTests(TestCase):
         self.client.post(reverse('waterpark:customer-buy-tiket'), {'validity_day': date.today()})
         tiket = Ticket.objects.all()
         self.assertEqual(tiket.count(), 1, "Duplicated ticket at the same day")
+
+    def tearDown(self):
+        myUser.objects.get(username='paola98').delete()
 
 
 class ValidityDeltaFunctionTests(TestCase):
