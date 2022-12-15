@@ -7,6 +7,10 @@
     <div class="text-center" style="background-color: lightgray">
         <h1><strong><u>SEASON PASS RESULTS:</u></strong></h1><br>
         <a href="{% url 'waterpark:staff-search-seasonpass-for-user' %}"><button type="button" class="btn btn-info">Back</button></a>
+        {% if request.GET.nameform %}
+           <br><br>
+           <p><strong><u>Searching for "{{ request.GET.nameform }}" season pass</u></strong></p><br>
+        {% endif %}
         </div>
     <div class="container p-3 my-3 bg-dark text-white">
     {% for seasonpass in seasonpass_list %}

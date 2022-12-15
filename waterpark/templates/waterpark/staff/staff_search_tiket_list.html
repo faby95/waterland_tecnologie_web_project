@@ -7,7 +7,7 @@
 
     <div class="container p-3 my-3 bg-dark text-white">
     <div class="text-center">
-        <h1 style="color:blue;">STAFF TICKETS SEARCH RESULTS</h1><br>
+        <h1 style="color:blue;">STAFF TICKETS SEARCH RESULTS {% if request.GET.dateform %}<br>(DAY: {{ request.GET.dateform }}){% endif %}{% if request.GET.dateminform and request.GET.datemaxform %}<br>(FROM: {{ request.GET.dateminform }} TO: {{ request.GET.datemaxform }}){% endif %}{% if request.GET.yearform %}<br>(YEAR: {{ request.GET.yearform }}){% endif %}</h1><br>
         <h2><b>* Tickets found: {{ tiket_list.count }}</b></h2>
         <h2><b>* Unit price: $15</b></h2>
         <h2 id="price" style="color: greenyellow"><b>* Total gain: $</b></h2>

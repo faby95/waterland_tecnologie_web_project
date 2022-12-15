@@ -6,7 +6,7 @@
 
     <div class="container p-3 my-3 bg-dark text-white">
     <div class="text-center">
-        <h1 style="color:blue;">STAFF SEASONPASS SEARCH RESULTS</h1><br>
+        <h1 style="color:blue;">STAFF SEASONPASS SEARCH RESULTS {% if request.GET.yearform %}<br>(YEAR: {{ request.GET.yearform }}){% endif %}</h1><br>
         <h2><b>* SeasonPass found: {{ seasonpass_list.count }}</b></h2>
         <h2><b>* Unit price: $125</b></h2>
         <h2 id="price" style="color: greenyellow"><b>* Total gain: $</b></h2>

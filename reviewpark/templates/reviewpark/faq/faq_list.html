@@ -15,6 +15,13 @@
                     <button type="submit" class="btn btn-info">Search</button>
                 </form><br>
                 <a href="{% url 'reviewpark:faq' %}"><button type="button" class="btn btn-secondary">Get all Faq</button></a>
+                {% if request.GET.contextform %}
+                    <br><br>
+                    <p><strong><u>Searching for "{{ request.GET.contextform }}" context</u></strong></p>
+                {% else %}
+                    <br><br>
+                    <p><strong><u>All faq list</u></strong></p>
+                {% endif %}
             </div>
         </div>
     </div>
