@@ -82,8 +82,8 @@ class CustomerTicketBuyViewTests(TestCase):
         # Test code
         response = self.client.get(reverse('waterpark:customer-buy-tiket'))
         self.assertEqual(response.status_code, 200, 'customer cannot buy a ticket')  # 403 FORBIDDEN status code for not customer user
-        logger.warning(response.status_code)
-        logger.warning(response.content)  # Print with red color the content
+        logger.info(response.status_code)
+        logger.info(response.content)  # Print with red color the content
 
     def test_customer_buy_ticket_legit_period(self):
         # Test code
@@ -144,7 +144,8 @@ class CustomerTicketListViewTests(TestCase):
         # Go to the personal tiket list
         response = self.client.get(reverse('waterpark:customer-tiket-list'))
         self.assertEqual(response.status_code, 200, 'Expected 200 OK')
-        logger.warning(response.content)
+        logger.info(response.status_code)
+        logger.info(response.content)
         first_tiket_result_date = response.context['tiket_list'][0]['validity_day']
         self.assertEqual(first_tiket_result_date, date.today() + timedelta(days=2), 'Expected most recent date')  # DESC ORDER paginated by 1
         customer = myUser.objects.filter(username='paola98').values('id')[0]['id']
@@ -170,12 +171,14 @@ class CustomerRequiredMixinTests(TestCase):
         # For example go to the personal tiket list, a page permited just to the customers
         response = self.client.get(reverse('waterpark:customer-tiket-list'))
         self.assertEqual(response.status_code, 403, 'Expected 403 status code')  # Permission denied
-        logger.warning(response.content)
+        logger.info(response.status_code)
+        logger.info(response.content)
 
     def test_staff_required_mixin(self):
         response = self.client.get(reverse('waterpark:staff-manage-tiket-main'))
         self.assertEqual(response.status_code, 200, 'Expected 200 OK')  # Permission allowed
-        logger.warning(response.content)
+        logger.info(response.status_code)
+        logger.info(response.content)
 
     def tearDown(self):
         myUser.objects.get(username='paola98').delete()
@@ -197,12 +200,14 @@ class StaffRequiredMixinTests(TestCase):
         # For example go to the personal tiket list, a page permited just to the customers
         response = self.client.get(reverse('waterpark:customer-tiket-list'))
         self.assertEqual(response.status_code, 200, 'Expected 200 OK')  # Permission allowed
-        logger.warning(response.content)
+        logger.info(response.status_code)
+        logger.info(response.content)
 
     def test_staff_required_mixin(self):
         response = self.client.get(reverse('waterpark:staff-manage-tiket-main'))
         self.assertEqual(response.status_code, 403, 'Expected 403 status code')  # Permission denied
-        logger.warning(response.content)
+        logger.info(response.status_code)
+        logger.info(response.content)
 
     def tearDown(self):
         myUser.objects.get(username='paola98').delete()
@@ -235,8 +240,8 @@ class ValidityDeltaFunctionTests(TestCase):
     def test_validity_delta_seasonpass(self):
         today = date.today()
         end_validity_first_january_next_year = today + timedelta(days=validity_delta())
-        logger.warning('Today date: {}'.format(today))
-        logger.warning('Expected: NEXT YEAR-01-01')
-        logger.warning('Target date after function: {}'.format(end_validity_first_january_next_year))
+        logger.info('Today date: {}'.format(today))
+        logger.info('Expected: NEXT YEAR-01-01')
+        logger.info('Target date after function: {}'.format(end_validity_first_january_next_year))
         self.assertEqual(end_validity_first_january_next_year, date(today.year + 1, 1, 1),
                          'Date was not NEXT YEAR-01-01')

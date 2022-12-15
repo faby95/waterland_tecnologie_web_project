@@ -82,17 +82,17 @@ class FeedbackPermissionTests(TestCase):
         # Test code
         response = self.client.get(reverse('reviewpark:leave-feedback'))
         self.assertEqual(response.status_code, 403)  # Permission denied, no purchase exists
-        logger.warning('Purchase number = {}'.format(Ticket.objects.all().count()))
-        logger.warning('Status code = {}'.format(response.status_code))
-        logger.warning('Content = {}'.format(response.content))
+        logger.info('Purchase number = {}'.format(Ticket.objects.all().count()))
+        logger.info('Status code = {}'.format(response.status_code))
+        logger.info('Content = {}'.format(response.content))
 
     def test_purchase_made_feedback_access(self):
         self.client.post(reverse('waterpark:customer-buy-tiket'), {'validity_day': date.today()})
         response = self.client.get(reverse('reviewpark:leave-feedback'))
         self.assertEqual(response.status_code, 200)  # Permission allowed, purchase made
-        logger.warning('Purchase number = {}'.format(Ticket.objects.all().count()))
-        logger.warning('Status code = {}'.format(response.status_code))
-        logger.warning('Content = {}'.format(response.content))
+        logger.info('Purchase number = {}'.format(Ticket.objects.all().count()))
+        logger.info('Status code = {}'.format(response.status_code))
+        logger.info('Content = {}'.format(response.content))
 
     def tearDown(self):
         myUser.objects.get(username='paola98').delete()
