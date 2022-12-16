@@ -1,4 +1,5 @@
 {% extends 'navbase.html' %}
+{% load static %}
 
 {% block title %}SeasonPass - Profile: {{ user.username }}{% endblock %}
 
@@ -9,8 +10,46 @@
         </div>
     <div class="container p-3 my-3 bg-dark text-white">
     {% for seasonpass in seasonpass_list %}
-        <br>
-        <div class="container p-3 my-3 border">
+        <!-- Div for pdf elements -->
+        <!-- Div for pdf elements -->
+        <!-- Div for pdf elements -->
+        <div hidden id="printArea1">    <!-- Div for pdf elements -->
+            <table class="table table-striped table-dark">
+          <thead>
+            <tr>
+                <th scope="col"><strong>SEASON PASS FIELD</strong></th>
+              <th scope="col"><strong>INFO</strong></th>
+            </tr>
+          </thead>
+        <tbody>
+            <tr>
+            <th scope="row">SEASON PASS ID:</th>
+             <td>{{ seasonpass.seasonpass_slug }}</td>
+            </tr>
+            <tr>
+            <th scope="row">DATE OF PURCHASE:</th>
+             <td>{{ seasonpass.date_of_purchase }}</td>
+            </tr>
+            <tr>
+            <th scope="row">PRICE:</th>
+             <td>${{ seasonpass.cost }}</td>
+            </tr>
+            <tr>
+            <th scope="row">VALIDITY FROM:</th>
+             <td>{{ seasonpass.validity_from }}</td>
+            </tr>
+            <tr>
+            <th scope="row">VALIDITY TO:</th>
+             <td>{{ seasonpass.validity_to }}</td>
+            </tr>
+         </tbody>
+        </table>
+        </div>
+        <br>      <!-- Visible document -->
+        <!-- Visible document -->
+        <!-- Visible document -->
+        <!-- Visible document -->
+        <div class="container p-3 my-3 border" id="printArea">
         <table class="table table-striped table-dark">
           <thead>
             <tr>
@@ -46,7 +85,9 @@
          </tbody>
         </table>
         </div>
-        <a href="{% url 'reviewpark:leave-feedback' %}"><button type="button" class="btn btn-info">Leave a FeedBack</button></a>
+        <a href="{% url 'reviewpark:leave-feedback' %}"><button type="button" class="btn btn-info">Leave a FeedBack</button></a><br><br>
+        <button type="button" class="btn btn-success" onclick="printDiv()">Print season pass</button><br><br>
+        <button type="button" class="btn btn-warning" onclick="saveDiv()">Save season pass as PDF</button>
         <br>
     {% empty %}
         <div class="text-center">
@@ -75,5 +116,40 @@
         </span>
         </div>
     </div>
+
+{% endblock %}
+
+{% block javascript %}
+
+    <script>
+        function printDiv() {
+
+          let mywindow = window.open('', 'PRINT', 'height=650,width=900,top=100,left=150')
+
+          mywindow.document.write(`<html><head><title>Print Season Pass, username: {{ user.username }}</title>`)
+          mywindow.document.write('<img src="{% static 'img/logo.png' %}"><br></head><body ><h1>WATERLAND SEASON PASS (USER: {{ user.username }})</h1><br><h2>Gender: {{ user.gender }}<br>{% if user.first_name %}First name: {{ user.first_name }}<br>{% endif %}{% if user.last_name %}Last name: {{ user.last_name }}<br>{% endif %}Birthday: {{ user.birth_date }}</h2>')
+          mywindow.document.write(document.getElementById('printArea').innerHTML)
+          mywindow.document.write('</body></html>')
+
+          mywindow.document.close() // necessary for IE >= 10
+          mywindow.focus() // necessary for IE >= 10*/
+          setTimeout(function(){ mywindow.print(); mywindow.close()}, 2000)
+          // mywindow.print()
+          // mywindow.close()
+
+          return true;
+        }
+    </script>
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script> -->
+    <script src="{% static 'js/jspdfmin.js' %}"></script>
+
+    <script>
+        function saveDiv() {
+            let doc = new jsPDF()
+            doc.fromHTML(`<html><head><title>Print Season Pass, username: {{ user.username }}</title><h1>WATERLAND SEASON PASS</h1><br><h2>Username: {{ user.username }}<br>Gender: {{ user.gender }}<br>{% if user.first_name %}First name: {{ user.first_name }}<br>{% endif %}{% if user.last_name %}Last name: {{ user.last_name }}<br>{% endif %}Birthday: {{ user.birth_date }}</h2></head><body>` + document.getElementById('printArea1').innerHTML + `</body></html>`)
+            doc.save('{{ user.username }}_SeasonPass.pdf')
+        }
+    </script>
 
 {% endblock %}
