@@ -18,13 +18,16 @@
 * __pillow__
 * __django-cleanup__
 #### (Ulteriori dipendenze)
-* __bootstrap__ (cdn importante nella base.html) [![N|Solid](https://www.geekandjob.com/uploads/wiki/40d4cef4ffedd6c9d9ac006932092638.png)](https://getbootstrap.com/docs/4.3/getting-started/introduction/)
+* __bootstrap__ (cdn importate nella base.html) [![N|Solid](https://www.geekandjob.com/uploads/wiki/40d4cef4ffedd6c9d9ac006932092638.png)](https://getbootstrap.com/docs/4.3/getting-started/introduction/)
 * __sweet allert__ (utilizzato per i messaggi di avviso interni al sito, presente in static/js)
 
 [![N|Solid](https://raw.githubusercontent.com/t4t5/sweetalert/e3c2085473a0eb5a6b022e43eb22e746380bb955/assets/logotype.png)](https://sweetalert.js.org/guides/)
 * __chart.js__ (utilizzato per il grafico, presente in static/js)
 
 [![N|Solid](https://camo.githubusercontent.com/9be0208aa516b4d1976412d27e9f73d851ea253f8ee005a0b600939f841bba8b/68747470733a2f2f7777772e63686172746a732e6f72672f6d656469612f6c6f676f2d7469746c652e737667)](https://www.chartjs.org/)
+*__jsPDF__ (utilizzato per generare il pdf dell'acquisto del customer, presente in static/js)
+
+[![N|Solid](https://www.bypeople.com/wp-content/uploads/2019/03/jspdf-featured-2.png)](https://parall.ax/products/jspdf?utm_source=cdnjs&utm_medium=cdnjs_link&utm_campaign=cdnjs_library)
 
 #### (Installazione) 
 > Creare una cartella (in questo caso l'ho chiamata progetto), successivamente entriamo nella cartella
