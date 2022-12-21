@@ -40,9 +40,11 @@ class User(AbstractUser):
         return f'{self.username} - Profile'
 
     def save(self, *args, **kwargs):
+        if self.is_staff:
+            self.is_staff_member = True
+
         if not self.slug:
             self.slug = slugify(str(UUID_LIB.uuid1()))
-        super().save(*args, **kwargs)   # Save all at database
 
         if self.propic:    # Using Pillow Package to resize the propic
             img = Image.open(self.propic.path)
@@ -50,6 +52,8 @@ class User(AbstractUser):
                 output_size = (200, 200)
                 img.thumbnail(output_size)
                 img.save(self.propic.path)
+
+        super().save(*args, **kwargs)  # Save all at database
 
 
 class StaffAuthTable(models.Model):  # External populated table for hired staff
