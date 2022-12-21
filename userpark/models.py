@@ -53,7 +53,7 @@ class User(AbstractUser):
                 img.thumbnail(output_size)
                 img.save(self.propic.path)
 
-        super().save(*args, **kwargs)  # Save all at database
+        return super().save(*args, **kwargs)  # Save all at database
 
 
 class StaffAuthTable(models.Model):  # External populated table for hired staff
