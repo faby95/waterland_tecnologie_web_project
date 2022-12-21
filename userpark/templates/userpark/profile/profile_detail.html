@@ -52,10 +52,17 @@
         <td>{{ user.birth_date }}</td>
         <td><a href="{% url 'userpark:user-profile-update-birthdate' user.slug %}"><button type="button" class="btn btn-info">UPDATE</button></a></td>
         </tr>
-        {% if user.is_staff_member %}
+        {% if user.is_staff_member and not user.is_staff %}
             <tr>
             <th scope="row">Staff code</th>
             <td>{{ user.staff_assigned_code }}</td>
+            <td>-</td>
+            </tr>
+        {% endif %}
+        {% if user.is_staff %}
+            <tr>
+            <th scope="row">Staff code</th>
+            <td>WEBSITE ADMINISTRATOR</td>
             <td>-</td>
             </tr>
         {% endif %}
