@@ -6,6 +6,9 @@ from django.urls import reverse
 
 # Create your tests here.
 
+# Test completi in waterpark (tiket) e reviewpark (feedback)
+# Questi sono test di prova sulle view dell'utente
+
 
 class CreateUserTypeTests(TestCase):
 

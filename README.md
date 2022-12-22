@@ -67,6 +67,47 @@ http://127.0.0.1:8000
 ```sh
 http://localhost:8000
 ```
+
+#### (Utenti e chiavi di registrazione staff pre-impostato)
+
+##### CUSTOMER: ( Password valida per tutti i customer = !Customer123! )
+
+- Luke Gomez, nick: luke93
+- Joseph Lopez, nick: jose89
+- Joshua Yates, nick: josh94
+- Benjamin Scott, nick: benji88
+- James Thompson, nick: james90
+- Jimmy Harrison, nick: jim85
+- Kelly Shields, nick: kel84
+- Deborah Morrison, nick: debby80
+- Alyssa Carter, nick: aly98
+- Diane Richmond, nick: diane99
+- Karen Wilson, nick: karen92
+- Maria Hartman, nick: mary82
+
+##### STAFF: ( Password valida per tutti gli staff = !Staff123! )
+
+- Kyle Lee, nick: kyle92
+- Amy Reynolds, nick: amy98
+
+##### AMMINISTRATORE DEL SITO ( Accesso a mansioni staff più zona admin )
+
+- nick: admin
+- password: admin
+
+##### CHIAVI PER L'ISCRIZIONE DELLE UTENZE STAFF
+
+- ky11e   staffcreatekyle       usata da: kyle92
+- a22y3   staffcreateamy        usata da: amy98
+
+- asd12   createstaffuser       libera
+- zxc33   staffcreate           libera
+- 45lkj   staffuser             libera
+- 74mnb   userstaff             libera
+- 8yui2   createstaff           libera
+
+
+
 #### (Utilizzo)
 Il sito contiene una pagina informativa generale, ulteriori link alla sezione Faq, Feedbadk e About us (che contiene i contatti anche), queste pagine sono visibili a tutti.
 Viene mostrata una sezione di sign-in e log-in, la sign-in divide due tipologie di utenti, staff e customer.
