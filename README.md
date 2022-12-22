@@ -92,19 +92,19 @@ http://localhost:8000
 
 ##### AMMINISTRATORE DEL SITO ( Accesso a mansioni staff più zona admin )
 
-- nick: admin
-- password: admin
+- Nick: admin
+- Password: admin
 
 ##### CHIAVI PER L'ISCRIZIONE DELLE UTENZE STAFF
 
-- ky11e   staffcreatekyle       usata da: kyle92
-- a22y3   staffcreateamy        usata da: amy98
+- Staff assigned code: ky11e  -- Staff key: staffcreatekyle      -- Stato: usata da: kyle92
+- Staff assigned code: a22y3  -- Staff key: staffcreateamy       -- Stato: usata da: amy98
 
-- asd12   createstaffuser       libera
-- zxc33   staffcreate           libera
-- 45lkj   staffuser             libera
-- 74mnb   userstaff             libera
-- 8yui2   createstaff           libera
+- Staff assigned code: asd12  -- Staff key: createstaffuser      -- Stato: libera
+- Staff assigned code: zxc33  -- Staff key: staffcreate          -- Stato: libera
+- Staff assigned code: 45lkj  -- Staff key: staffuser            -- Stato: libera
+- Staff assigned code: 74mnb  -- Staff key: userstaff            -- Stato: libera
+- Staff assigned code: 8yui2  -- Staff key: createstaff          -- Stato: libera
 
 
 
