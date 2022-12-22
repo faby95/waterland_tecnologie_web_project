@@ -35,12 +35,18 @@ class CustomerBuyTiketView(LoginRequiredMixin, CustomerRequiredMixin, SuccessMes
         if Tiket.objects.filter(customer=self.request.user, validity_day=self.object.validity_day):
             self.tiket_already_taken()
             return self.form_invalid(form)
+        elif SeasonPass.objects.filter(customer=self.request.user, validity_from__year=date.today().year) and self.object.validity_day.year == date.today().year:
+            self.got_seasonpass()
+            return self.form_invalid(form)
         else:
             self.object.save()
             return super().form_valid(form)
 
     def tiket_already_taken(self):
         messages.warning(self.request, 'You already got a ticket for this date!')
+
+    def got_seasonpass(self):
+        messages.warning(self.request, 'You are cover from the season pass of this year')
 
     def form_invalid(self, form):
         return super().form_invalid(form)

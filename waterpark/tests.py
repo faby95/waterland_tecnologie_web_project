@@ -14,11 +14,12 @@ class TestTicket(TestCase):
 
     def setUp(self):
         self.t = Ticket.objects.create(customer=myUser.objects.create(username='paola98', first_name='paola',
-                                                                     last_name='verdi', gender='F',
-                                                                     email='pv@gmail.com', is_staff_member=False,
-                                                                     is_staff=False, is_superuser=False,
-                                                                     birth_date='1998-02-13'),
-                                      validity_day=date.today()+timedelta(days=20))
+                                                                      last_name='verdi', gender='F',
+                                                                      email='pv@gmail.com', is_staff_member=False,
+                                                                      is_staff=False, is_superuser=False,
+                                                                      birth_date='1998-02-13'),
+                                       validity_day=date.today()+timedelta(days=20))
+        return super().setUp()
 
     def testSetUpCreation(self):
         self.assertIsNotNone(self.t, 't do not exists')
@@ -62,6 +63,7 @@ class TestTicket(TestCase):
     def tearDown(self):
         self.t.delete()
         myUser.objects.get(username='paola98').delete()
+        return super().tearDown()
     # validity_date attribute range tested in view, customer use the view to interact with database
     # view use validation logic before to save in database
 
@@ -76,7 +78,7 @@ class CustomerTicketBuyViewTests(TestCase):
         user.set_password('Asdfghjkl!!')
         user.save()
         self.client.force_login(myUser.objects.get(username='paola98'))
-        super().setUp()
+        return super().setUp()
 
     def test_customer_ticket_buy_access_mixin(self):
         # Test code
@@ -133,7 +135,7 @@ class CustomerTicketListViewTests(TestCase):
         user.set_password('Asdfghjkl!!')
         user.save()
         self.client.force_login(myUser.objects.get(username='paola98'))
-        super().setUp()
+        return super().setUp()
 
     def test_customer_tiket_personal_list(self):
         # Create 3 tikets
@@ -153,6 +155,7 @@ class CustomerTicketListViewTests(TestCase):
 
     def tearDown(self):
         myUser.objects.get(username='paola98').delete()
+        return super().tearDown()
 
 
 class CustomerRequiredMixinTests(TestCase):
@@ -165,7 +168,7 @@ class CustomerRequiredMixinTests(TestCase):
         user.set_password('Asdfghjkl!!')
         user.save()  # User staff created
         self.client.force_login(myUser.objects.get(username='paola98'))
-        super().setUp()
+        return super().setUp()
 
     def test_customer_required_mixin(self):
         # For example go to the personal tiket list, a page permited just to the customers
@@ -182,6 +185,7 @@ class CustomerRequiredMixinTests(TestCase):
 
     def tearDown(self):
         myUser.objects.get(username='paola98').delete()
+        return super().tearDown()
 
 
 class StaffRequiredMixinTests(TestCase):
@@ -194,7 +198,7 @@ class StaffRequiredMixinTests(TestCase):
         user.set_password('Asdfghjkl!!')
         user.save()  # User staff created
         self.client.force_login(myUser.objects.get(username='paola98'))
-        super().setUp()
+        return super().setUp()
 
     def test_customer_required_mixin(self):
         # For example go to the personal tiket list, a page permited just to the customers
@@ -211,6 +215,7 @@ class StaffRequiredMixinTests(TestCase):
 
     def tearDown(self):
         myUser.objects.get(username='paola98').delete()
+        return super().tearDown()
 
 
 class DuplicateTicketTests(TestCase):
@@ -223,7 +228,7 @@ class DuplicateTicketTests(TestCase):
         user.set_password('Asdfghjkl!!')
         user.save()
         self.client.force_login(myUser.objects.get(username='paola98'))
-        super().setUp()
+        return super().setUp()
 
     def test_duplicate_tikets(self):
         self.client.post(reverse('waterpark:customer-buy-tiket'), {'validity_day': date.today()})
@@ -233,6 +238,7 @@ class DuplicateTicketTests(TestCase):
 
     def tearDown(self):
         myUser.objects.get(username='paola98').delete()
+        return super().tearDown()
 
 
 class ValidityDeltaFunctionTests(TestCase):

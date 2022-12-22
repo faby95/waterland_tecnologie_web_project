@@ -30,7 +30,7 @@ class Tiket(models.Model):
     tiket_slug = models.SlugField(null=False, unique=True)            # Slug reference used for each tiket created
     date_of_purchase = models.DateTimeField(default=timezone.now, null=False, blank=False)
     validity_day = models.DateField(help_text="Choose the day you will come to Waterland", null=False,
-                                  validators=[MinValueValidator(limit_value=date.today), MaxValueValidator(limit_value=date.today()+timedelta(days=365))],
+                                    validators=[MinValueValidator(limit_value=date.today), MaxValueValidator(limit_value=date.today()+timedelta(days=365))],
                                     default=date.today, blank=False, verbose_name='Entry Waterland date')
     cost = models.IntegerField(default=15, null=False, blank=False)
 
@@ -43,7 +43,7 @@ class Tiket(models.Model):
     def save(self, *args, **kwargs):
         if not self.tiket_slug:
             self.tiket_slug = slugify(str(UUID_LIB.uuid1()))
-        super().save(*args, **kwargs)   # Save all at database
+        return super().save(*args, **kwargs)   # Save all at database
 
 
 class SeasonPass(models.Model):
@@ -53,8 +53,8 @@ class SeasonPass(models.Model):
     validity_from = models.DateField(default=date.today, null=False, blank=False)
     validity_to = models.DateField(default=date.today()+timedelta(days=validity_delta()), null=False, blank=False)
     seasonpass_photo = models.ImageField(upload_to=media_directory_path, blank=False, null=False,
-                                     help_text='Add your photo, it shall added to your season pass',
-                                     verbose_name='SeasonPass Photo')
+                                         help_text='Add your photo, it shall added to your season pass',
+                                         verbose_name='SeasonPass Photo')
     cost = models.IntegerField(default=125, null=False, blank=False)
 
     class Meta:
@@ -66,7 +66,7 @@ class SeasonPass(models.Model):
     def save(self, *args, **kwargs):
         if not self.seasonpass_slug:
             self.seasonpass_slug = slugify(str(UUID_LIB.uuid1()))
-        super().save(*args, **kwargs)   # Save all at database
+        super().save(*args, **kwargs)  # Save all at database
 
         if self.seasonpass_photo:    # Using Pillow Package to resize the seasonpass photo
             img = Image.open(self.seasonpass_photo.path)

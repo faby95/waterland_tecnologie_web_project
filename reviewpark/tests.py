@@ -15,11 +15,12 @@ class TestFeedback(TestCase):
 
     def setUp(self):
         self.customer = myUser.objects.create(username='paola98', first_name='paola',
-                                                                     last_name='verdi', gender='F',
-                                                                     email='pv@gmail.com', is_staff_member=False,
-                                                                     is_staff=False, is_superuser=False,
-                                                                     birth_date='1998-02-13')
+                                              last_name='verdi', gender='F',
+                                              email='pv@gmail.com', is_staff_member=False,
+                                              is_staff=False, is_superuser=False,
+                                              birth_date='1998-02-13')
         self.f = Feedback.objects.create(stars=5, customer=self.customer, feedback_text='Feedback for test')
+        return super().setUp()
 
     def testSetupCreation(self):
         self.assertIsNotNone(self.customer, 'customer is null')
@@ -64,6 +65,7 @@ class TestFeedback(TestCase):
     def tearDown(self):
         self.f.delete()
         self.customer.delete()
+        return super().tearDown()
 
 
 class FeedbackPermissionTests(TestCase):
@@ -76,7 +78,7 @@ class FeedbackPermissionTests(TestCase):
         user.set_password('Asdfghjkl!!')
         user.save()
         self.client.force_login(myUser.objects.get(username='paola98'))
-        super().setUp()
+        return super().setUp()
 
     def test_purchase_required_mixin_feedback_access(self):
         # Test code
@@ -96,3 +98,4 @@ class FeedbackPermissionTests(TestCase):
 
     def tearDown(self):
         myUser.objects.get(username='paola98').delete()
+        return super().tearDown()
